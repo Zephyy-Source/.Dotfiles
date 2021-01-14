@@ -15,7 +15,7 @@
  '(neo-smart-open t)
  '(neo-theme 'nerd)
  '(package-selected-packages
-   '(outshine flycheck-pyflakes elpy ediprolog company-shell flycheck-popup-tip company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme flycheck-pos-tip iedit flycheck neotree sr-speedbar))
+   '(outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree sr-speedbar))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 ;; добавление расширенного репозитория дополнений
@@ -26,7 +26,7 @@
 (show-paren-mode 2)
 ;; Дополнять скобочки
 (electric-pair-mode 1)
-(electric-indent-mode -1)
+(electric-indent-mode 1)
 
 ;;;; Рамка:
 (setq frame-title-format "GNU Emacs: %b")
@@ -90,7 +90,7 @@
 (require 'neotree)
 (global-set-key (kbd "<f1>") 'neotree-toggle)
 '(neo-dir-link-face ((t nil)))
-;;;; Company
+;;;; Companyn
 (require 'company)
 (require 'company-irony)
 (add-hook 'after-init-hook 'global-company-mode)
@@ -105,6 +105,12 @@
 (add-hook 'c++-mode-hook 'irony-mode)
 
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(require 'company-irony-c-headers)
+;; Load with `irony-mode` as a grouped backend
+(eval-after-load 'company
+    '(add-to-list
+      'company-backends '(company-irony-c-headers company-irony)))
 
 ;;;; Elpy:
 ;; ДЛя питона
@@ -143,12 +149,16 @@
 (require 'dash)
 (require 'outshine)
 
-(add-hook 'emacs-lisp-mode-hook 'outshine-mode)
+(add-hook 'outline-minor-mode-hook 'outshine-mode)
 
 (let ((kmap outline-minor-mode-map))
   (define-key kmap (kbd "M-RET") 'outshine-insert-heading)
   (define-key kmap (kbd "<backtab>") 'outshine-cycle-buffer)
+  '(outline-hide-subtree)
   )
+
+(add-hook 'emacs-lisp-mode-hook 'outshine-mode)
+
 
 ;;; Другие настройки:
 ;;;; Отключение бекапов:
@@ -160,3 +170,9 @@
 
 ;;;; Общий буфер обмена:
 (setq x-select-enable-clipboard t)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
