@@ -1,4 +1,4 @@
-;;; Custom-settings:
+;;;; Custom-settings:
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -9,13 +9,12 @@
  '(company-tooltip-idle-delay 0.2)
  '(ediprolog-program "/usr/bin/swipl")
  '(ediprolog-system 'swi)
- '(flycheck-popup-tip-error-prefix "> ")
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(neo-smart-open t)
  '(neo-theme 'nerd)
  '(package-selected-packages
-   '(outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree sr-speedbar))
+   '(lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree sr-speedbar))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 ;; добавление расширенного репозитория дополнений
@@ -69,12 +68,24 @@
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
+;;;; Yasnippet
+(require 'yasnippet)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
 ;;;; Bs:
 ;;Браузер буфферов на f2
 (require 'bs)
 (global-set-key (kbd "<f2>") 'bs-show)
-(require 'popup)
 
+;;;; lsp
+(require 'lsp-mode)
+;;;;; C-cpp
+(add-hook 'c-mode-hook #'lsp)
+(add-hook 'c++-mode-hook #'lsp)
+;;;;; Python
+(require 'lsp-python-ms)
+(setq lsp-python-ms-auto-install-server t)
+(add-hook 'python-mode-hook #'lsp)
 ;;;; Flycheck:
 ; Проверка кода
 (require 'flycheck)
@@ -90,38 +101,10 @@
 (require 'neotree)
 (global-set-key (kbd "<f1>") 'neotree-toggle)
 '(neo-dir-link-face ((t nil)))
-;;;; Companyn
+
+;;;; Company
 (require 'company)
-(require 'company-irony)
 (add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
-
-(add-to-list 'company-backends 'company-shell)
-
-;;;; Irony-mode:
-;; Модуль для си
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'c++-mode-hook 'irony-mode)
-
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(require 'company-irony-c-headers)
-;; Load with `irony-mode` as a grouped backend
-(eval-after-load 'company
-    '(add-to-list
-      'company-backends '(company-irony-c-headers company-irony)))
-
-;;;; Elpy:
-;; ДЛя питона
-(require 'elpy)
-(elpy-enable)
-
-(when (load "flycheck" t t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-
 ;;;; Iedit:
 ;; Рефакторинг на C-;
 (require 'iedit)
@@ -176,3 +159,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
