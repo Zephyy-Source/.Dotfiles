@@ -37,14 +37,14 @@
    #+END_SRC
 ** Нумерация строк
    Нумерация включена для всех программных модов
-   #+BEGIN_SRC 
+   #+BEGIN_SRC emacs-lisp
    (add-hook 'prog-mode-hook #'display-line-numbers-mode)
    #+END_SRC
 * Plugins
-  package иницилизируется в .emacs
+package иницилизируется в .emacs
 ** Ido
    Удобная подсказка в exo
-   #+BEGIN_SRC 
+   #+BEGIN_SRC emacs-lisp
    (require 'ido)
    (ido-mode t)
    (setq ido-enable-flex-matching t)
