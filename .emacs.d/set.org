@@ -82,6 +82,7 @@ package иницилизируется в .emacs
    (require 'yasnippet)
    (yas-reload-all)
    (add-hook 'prog-mode-hook #'yas-minor-mode)
+   (add-hook 'org-mode-hook #'yas-minor-mode)
    #+END_SRC
 ** Iedit
    Рефакторинг на C-;
@@ -143,4 +144,17 @@ package иницилизируется в .emacs
 ** Общий буфер обмена
    #+BEGIN_SRC emacs-lisp
    (setq x-select-enable-clipboard t)
+   #+END_SRC
+** Проверка ошибок
+   #+BEGIN_SRC emacs-lisp
+	 (add-hook 'text-mode-hook #'flyspell-mode)
+	 (with-eval-after-load "ispell"
+		 (setq ispell-program-name "hunspell")
+		 (setq ispell-dictionary "en_US,ru_RU")
+		 (ispell-set-spellchecker-params)
+		 (ispell-hunspell-add-multi-dic "en_US,ru_RU")
+		 '(progn
+		   (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+		   (define-key flyspell-mouse-map [mouse-3] #'undefined))
+		 )
    #+END_SRC
