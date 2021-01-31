@@ -21,9 +21,10 @@
    #+END_SRC
 ** Шрифт и тема
    Jetbrains Mono
+   Темы: afternoon
    #+BEGIN_SRC emacs-lisp
-   '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
-   (load-theme 'afternoon t)
+     '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
+     (load-theme 'cherry-blossom t)
    #+END_SRC
 ** Отсутпы
    #+BEGIN_SRC emacs-lisp
@@ -131,8 +132,10 @@ package иницилизируется в .emacs
 ** Ediprolog
    Выполнение кода prolog по нажатию f9
    #+BEGIN_SRC emacs-lisp
-   (require 'ediprolog)
-   (global-set-key (kbd "<f9>") 'ediprolog-dwim)
+	 (require 'ediprolog)
+	 (with-eval-after-load "ediprolog"
+		 (global-set-key (kbd "<f9>") 'ediprolog-dwim))
+
    #+END_SRC
 * Другие настройки
 ** Отключение бекапов
@@ -152,9 +155,6 @@ package иницилизируется в .emacs
 		 (setq ispell-program-name "hunspell")
 		 (setq ispell-dictionary "en_US,ru_RU")
 		 (ispell-set-spellchecker-params)
-		 (ispell-hunspell-add-multi-dic "en_US,ru_RU")
-		 '(progn
-		   (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
-		   (define-key flyspell-mouse-map [mouse-3] #'undefined))
-		 )
+		 (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
    #+END_SRC
+
