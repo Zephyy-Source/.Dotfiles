@@ -153,8 +153,10 @@ package иницилизируется в .emacs
 	 (add-hook 'text-mode-hook #'flyspell-mode)
 	 (with-eval-after-load "ispell"
 		 (setq ispell-program-name "hunspell")
-		 (setq ispell-dictionary "en_US,ru_RU")
 		 (ispell-set-spellchecker-params)
-		 (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
+		 (ispell-hunspell-add-multi-dic "en_US,ru_RU")
+		 (setq ispell-dictionary "en_US,ru_RU")
+		 (setq ispell-personal-dictionary "~/.hunspell_personal")
+		 )
    #+END_SRC
 
