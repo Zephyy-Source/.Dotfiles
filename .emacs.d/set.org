@@ -21,12 +21,12 @@
    #+END_SRC
 ** Шрифт и тема
    Jetbrains Mono
-   Темы: afternoon
+   Темы: afternoon, cherry-blossom
    #+BEGIN_SRC emacs-lisp
      '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
      (load-theme 'cherry-blossom t)
    #+END_SRC
-** Отсутпы
+** Отступы
    #+BEGIN_SRC emacs-lisp
    ;;(setq-default indent-tabs-mode nil) ;; отключить возможность ставить отступы TAB'ом
    (setq-default tab-width 4) ;; ширина табуляции - 4 пробельных символа
@@ -70,12 +70,18 @@ package иницилизируется в .emacs
    (require 'bs)
    (global-set-key (kbd "<f2>") 'bs-show)
    #+END_SRC
+** All_the_icons
+   Иконки для других модов
+   #+BEGIN_SRC emacs-lisp
+	 (require 'all-the-icons)
+	 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+   #+END_SRC
 ** Neotree
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
    (require 'neotree)
    (global-set-key (kbd "<f1>") 'neotree-toggle)
-   '(neo-dir-link-face ((t nil)))
+   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
    #+END_SRC
 ** Yasnippet
    Снипеты дополнений для разных режимов
@@ -90,17 +96,17 @@ package иницилизируется в .emacs
    #+BEGIN_SRC emacs-lisp
    (require 'iedit)
    #+END_SRC
-** Comapny
-   Автодополнение
-   #+BEGIN_SRC emacs-lisp
-   (require 'company)
-   (add-hook 'after-init-hook 'global-company-mode)
-   #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
    (require 'lsp-mode)
    #+END_SRC
+*** lsp-ui
+	#+BEGIN_SRC emacs-lisp
+	(lsp-ui-mode t)
+	(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+	(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+	#+END_SRC
 *** C-C++
 	#+BEGIN_SRC emacs-lisp
 	(add-hook 'c-mode-hook #'lsp)
@@ -117,6 +123,25 @@ package иницилизируется в .emacs
 	(require 'lsp-java)
 	(add-hook 'java-mode-hook #'lsp)
 	#+END_SRC
+** Company
+   Автодополнение
+   #+BEGIN_SRC emacs-lisp
+   (require 'company)
+   (add-hook 'after-init-hook 'global-company-mode)
+   (setq company-idle-delay 0)
+   (setq company-minimum-prefix-length 1) 
+   (setq company-selection-wrap-around t)
+   #+END_SRC
+*** Company-lsp
+	#+BEGIN_SRC emacs-lisp
+	(require 'company-lsp)
+	(push 'company-lsp company-backends)
+	#+END_SRC*** 
+** Projectile
+   #+BEGIN_SRC emacs-lisp
+   (projectile-mode +1)
+   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+   #+END_SRC
 ** Flycheck
    Проверка синтаксиса
    #+BEGIN_SRC emacs-lisp
@@ -134,7 +159,11 @@ package иницилизируется в .emacs
    #+BEGIN_SRC emacs-lisp
 	 (require 'ediprolog)
 	 (with-eval-after-load "ediprolog"
-		 (global-set-key (kbd "<f9>") 'ediprolog-dwim))
+		 (global-set-key (kbd "<f9>") 'ediprolog-dwim)
+		 (setq ediprolog-program "/usr/bin/swipl")
+		 (setq ediprolog-system 'swi)
+
+		 )
 
    #+END_SRC
 * Другие настройки
@@ -159,4 +188,4 @@ package иницилизируется в .emacs
 		 (setq ispell-personal-dictionary "~/.hunspell_personal")
 		 )
    #+END_SRC
-
+p

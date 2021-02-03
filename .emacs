@@ -13,19 +13,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(company-idle-delay 0.2)
- '(company-tooltip-idle-delay 0.2)
- '(ediprolog-program "/usr/bin/swipl")
- '(ediprolog-system 'swi)
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(neo-smart-open t)
- '(neo-theme 'nerd)
  '(package-selected-packages
-   '(cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
+   '(projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree)))
 
 ;;Расширение репозитория
 
