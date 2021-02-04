@@ -28,13 +28,12 @@
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
-   ;;(setq-default indent-tabs-mode nil) ;; отключить возможность ставить отступы TAB'ом
-   (setq-default tab-width 4) ;; ширина табуляции - 4 пробельных символа
-   (setq-default c-basic-offset 4)
-   (setq-default standart-indent 4) ;; стандартная ширина отступа - 4 пробельных символа
-   (setq-default lisp-body-indent 4) ;; сдвигать Lisp-выражения на 4 пробельных символа
-   (global-set-key (kbd "RET") 'newline-and-indent) ;; при нажатии Enter перевести каретку и сделать отступ
-   (setq lisp-indent-function  'common-lisp-indent-function)
+	 (setq-default tab-width 4)
+	 (setq-default c-basic-offset 4)
+	 (setq-default standart-indent 4)
+	 (setq-default lisp-body-indent 4)
+	 (setq backward-delete-char-untabify-method 'hungry)
+	 (setq lisp-indent-function  'common-lisp-indent-function)
    #+END_SRC
 ** Нумерация строк
    Нумерация включена для всех программных модов
@@ -69,6 +68,10 @@ package иницилизируется в .emacs
    #+BEGIN_SRC emacs-lisp
    (require 'bs)
    (global-set-key (kbd "<f2>") 'bs-show)
+   #+END_SRC
+** Org-mode
+   #+BEGIN_SRC emacs-lisp
+   (setq org-src-fontify-natively t)
    #+END_SRC
 ** All_the_icons
    Иконки для других модов
@@ -107,6 +110,25 @@ package иницилизируется в .emacs
 	(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
 	(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 	#+END_SRC
+*** dap-mode
+	Debugger 
+	#+BEGIN_SRC emacs-lisp
+	  (require 'dap-mode)
+	#+END_SRC
+**** C-C++
+	 #+BEGIN_SRC emacs-lisp
+	   (require 'dap-cpptools)
+	   (with-eval-after-load "dap-cpptools"
+		   (dap-cpptools-setup))
+
+
+	 #+END_SRC
+**** Python
+	 Необходим ptvsd.
+	 pip install ptvsd
+	 #+BEGIN_SRC emacs-lisp
+	 (require 'dap-python)
+	 #+END_SRC
 *** C-C++
 	#+BEGIN_SRC emacs-lisp
 	(add-hook 'c-mode-hook #'lsp)
@@ -126,11 +148,11 @@ package иницилизируется в .emacs
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
-   (require 'company)
-   (add-hook 'after-init-hook 'global-company-mode)
-   (setq company-idle-delay 0)
-   (setq company-minimum-prefix-length 1) 
-   (setq company-selection-wrap-around t)
+	 (require 'company)
+	 (add-hook 'after-init-hook 'global-company-mode)
+	 (setq company-idle-delay 0)
+	 (setq company-minimum-prefix-length 1) 
+	 (setq company-selection-wrap-around t)
    #+END_SRC
 *** Company-lsp
 	#+BEGIN_SRC emacs-lisp
@@ -188,4 +210,4 @@ package иницилизируется в .emacs
 		 (setq ispell-personal-dictionary "~/.hunspell_personal")
 		 )
    #+END_SRC
-p
+
