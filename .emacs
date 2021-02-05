@@ -17,7 +17,7 @@
  '(menu-bar-mode nil)
  '(neo-smart-open t)
  '(package-selected-packages
-   '(## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree)))
+   '(counsel-tramp counsel-test lsp-ivy counsel-projectile zzz-to-char all-the-icons-ibuffer ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree)))
 
 ;;Расширение репозитория
 

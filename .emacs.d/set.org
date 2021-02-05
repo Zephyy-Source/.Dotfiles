@@ -42,13 +42,37 @@
    #+END_SRC
 * Plugins
 package иницилизируется в .emacs
-** Ido
-   Удобная подсказка в exo
+** Ivy
+   Более удобное exo и другие плюшки
    #+BEGIN_SRC emacs-lisp
-   (require 'ido)
-   (ido-mode t)
-   (setq ido-enable-flex-matching t)
+	 (ivy-mode 1)
+	 (setq ivy-use-virtual-buffers t)
+	 (setq enable-recursive-minibuffers t)
    #+END_SRC
+*** Swiper
+	Прокаченный поиск через ivy
+	#+BEGIN_SRC emacs-lisp
+	(global-set-key "\C-s" 'swiper)
+	(global-set-key (kbd "C-c C-r") 'ivy-resume)
+	#+END_SRC
+*** Counsel
+	Улучшение для стандартных команд + 
+	#+BEGIN_SRC emacs-lisp
+	  (global-set-key (kbd "M-x") 'counsel-M-x)
+	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+	  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+	#+END_SRC
+**** counsel-tramp
+	 Подключение counsel к tramp
+	 #+BEGIN_SRC emacs-lisp
+	 (define-key global-map (kbd "C-c s") 'counsel-tramp)
+	 #+END_SRC
+**** counsel-projectile
+	 Подключение counsel к projectile
+	 #+BEGIN_SRC emacs-lisp
+	 (counsel-projectile-mode 1)
+	 #+END_SRC
+
 ** Bookmark
    Закладки по тексту
    #+BEGIN_SRC emacs-lisp
@@ -76,13 +100,23 @@ package иницилизируется в .emacs
 ** All_the_icons
    Иконки для других модов
    #+BEGIN_SRC emacs-lisp
-	 (require 'all-the-icons)
-	 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+   (require 'all-the-icons)
    #+END_SRC
+*** all-the-icons-dired
+	Иконки в dired
+	#+BEGIN_SRC emacs-lisp
+	(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+	#+END_SRC
+*** all-the-icons-ivy
+	Иконки в буферах ivy
+	#+BEGIN_SRC emacs-lisp
+	(all-the-icons-ivy-setup)
+	#+END_SRC
 ** Neotree
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
    (require 'neotree)
+   (global-unset-key (kbd "<f1>"))
    (global-set-key (kbd "<f1>") 'neotree-toggle)
    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
    #+END_SRC
@@ -94,24 +128,21 @@ package иницилизируется в .emacs
    (add-hook 'prog-mode-hook #'yas-minor-mode)
    (add-hook 'org-mode-hook #'yas-minor-mode)
    #+END_SRC
-** Iedit
-   Рефакторинг на C-;
-   #+BEGIN_SRC emacs-lisp
-   (require 'iedit)
-   #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
    (require 'lsp-mode)
    #+END_SRC
 *** lsp-ui
+	Графический интерфейс для lsp
 	#+BEGIN_SRC emacs-lisp
 	(lsp-ui-mode t)
 	(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
 	(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 	#+END_SRC
 *** dap-mode
-	Debugger 
+	Дебагер 
+	Для java дебагер поставляется lsp-java
 	#+BEGIN_SRC emacs-lisp
 	  (require 'dap-mode)
 	#+END_SRC
@@ -120,8 +151,6 @@ package иницилизируется в .emacs
 	   (require 'dap-cpptools)
 	   (with-eval-after-load "dap-cpptools"
 		   (dap-cpptools-setup))
-
-
 	 #+END_SRC
 **** Python
 	 Необходим ptvsd.
@@ -155,11 +184,14 @@ package иницилизируется в .emacs
 	 (setq company-selection-wrap-around t)
    #+END_SRC
 *** Company-lsp
+	
 	#+BEGIN_SRC emacs-lisp
 	(require 'company-lsp)
 	(push 'company-lsp company-backends)
 	#+END_SRC*** 
 ** Projectile
+   Навигация по проектам которые содержат системы контроля версий
+   либо файл .projectile
    #+BEGIN_SRC emacs-lisp
    (projectile-mode +1)
    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
@@ -171,7 +203,8 @@ package иницилизируется в .emacs
    (global-flycheck-mode)
    #+END_SRC
 ** Tramp
-   Удалённый доступ к ssh
+   Использование данной конфигурации emacs 
+   для доступа к удалённым серверам
    #+BEGIN_SRC emacs-lisp
    (require 'tramp)
    (setq tramp-default-method "ssh")
@@ -184,9 +217,7 @@ package иницилизируется в .emacs
 		 (global-set-key (kbd "<f9>") 'ediprolog-dwim)
 		 (setq ediprolog-program "/usr/bin/swipl")
 		 (setq ediprolog-system 'swi)
-
 		 )
-
    #+END_SRC
 * Другие настройки
 ** Отключение бекапов
