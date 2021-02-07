@@ -18,6 +18,7 @@
    (menu-bar-mode -1)
    (tool-bar-mode -1)
    (scroll-bar-mode -1)
+   (setq inhibit-startup-screen t)
    #+END_SRC
 ** Шрифт и тема
    Jetbrains Mono
@@ -61,6 +62,9 @@ package иницилизируется в .emacs
 	  (global-set-key (kbd "M-x") 'counsel-M-x)
 	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 	  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+
+	  (global-set-key (kbd "<f2>") 'counsel-imenu)
+	  (global-set-key (kbd "<f12>") 'counsel-bookmark)
 	#+END_SRC
 **** counsel-tramp
 	 Подключение counsel к tramp
@@ -77,27 +81,18 @@ package иницилизируется в .emacs
    Закладки по тексту
    #+BEGIN_SRC emacs-lisp
    (require 'bookmark)
-   (global-set-key (kbd "<f12>") 'bookmark-bmenu-list)
-   (global-set-key (kbd "C-<f12>") 'bookmark-set)
-   (global-set-key (kbd "S-<f12>") 'bookmark-jump)
-
+   
    (setq bookmark-save-flag t)
    (when (file-exists-p (concat user-emacs-directory "bookmarks"))
    		(bookmark-load bookmark-default-file t))
 
    (setq bookmark-default-file (concat user-emacs-directory "bookmarks"))
    #+END_SRC
-** Bs
-   Браузер файлов. Бинд на <f2>
-   #+BEGIN_SRC emacs-lisp
-   (require 'bs)
-   (global-set-key (kbd "<f2>") 'bs-show)
-   #+END_SRC
 ** Org-mode
    #+BEGIN_SRC emacs-lisp
    (setq org-src-fontify-natively t)
    #+END_SRC
-** All_the_icons
+** All-the-icons
    Иконки для других модов
    #+BEGIN_SRC emacs-lisp
    (require 'all-the-icons)
@@ -107,17 +102,13 @@ package иницилизируется в .emacs
 	#+BEGIN_SRC emacs-lisp
 	(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 	#+END_SRC
-*** all-the-icons-ivy
-	Иконки в буферах ivy
-	#+BEGIN_SRC emacs-lisp
-	(all-the-icons-ivy-setup)
-	#+END_SRC
 ** Neotree
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
    (require 'neotree)
    (global-unset-key (kbd "<f1>"))
    (global-set-key (kbd "<f1>") 'neotree-toggle)
+   (setq neo-smart-open t)
    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
    #+END_SRC
 ** Yasnippet
@@ -136,9 +127,12 @@ package иницилизируется в .emacs
 *** lsp-ui
 	Графический интерфейс для lsp
 	#+BEGIN_SRC emacs-lisp
-	(lsp-ui-mode t)
-	(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-	(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+	  (lsp-ui-mode t)
+	  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+	  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+
+	  (setq lsp-ui-doc-delay 3)
+	  (setq lsp-ui-doc-position 'at-point)
 	#+END_SRC
 *** dap-mode
 	Дебагер 
@@ -184,7 +178,6 @@ package иницилизируется в .emacs
 	 (setq company-selection-wrap-around t)
    #+END_SRC
 *** Company-lsp
-	
 	#+BEGIN_SRC emacs-lisp
 	(require 'company-lsp)
 	(push 'company-lsp company-backends)
@@ -210,7 +203,7 @@ package иницилизируется в .emacs
    (setq tramp-default-method "ssh")
    #+END_SRC
 ** Ediprolog
-   Выполнение кода prolog по нажатию f9
+   Выpполнение кода prolog по нажатию f9
    #+BEGIN_SRC emacs-lisp
 	 (require 'ediprolog)
 	 (with-eval-after-load "ediprolog"
@@ -240,5 +233,9 @@ package иницилизируется в .emacs
 		 (setq ispell-dictionary "en_US,ru_RU")
 		 (setq ispell-personal-dictionary "~/.hunspell_personal")
 		 )
+   #+END_SRC
+** Кастомные бинды
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "C-x O") 'window-swap-states)
    #+END_SRC
 
