@@ -239,3 +239,5 @@ package иницилизируется в .emacs
    (global-set-key (kbd "C-x O") 'window-swap-states)
    #+END_SRC
 
+
+
