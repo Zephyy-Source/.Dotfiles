@@ -206,11 +206,16 @@ package иницилизируется в .emacs
    Выpполнение кода prolog по нажатию f9
    #+BEGIN_SRC emacs-lisp
 	 (require 'ediprolog)
-	 (with-eval-after-load "ediprolog"
-		 (global-set-key (kbd "<f9>") 'ediprolog-dwim)
+
+	 (defun edi-set-hook()
+		 (local-set-key (kbd "<f9>") 'ediprolog-dwim)
+		 (setq ediprolog-group "swi")
 		 (setq ediprolog-program "/usr/bin/swipl")
-		 (setq ediprolog-system 'swi)
-		 )
+		 (setq ediprolog-system 'swi))
+
+	 (add-hook 'prolog-mode-hook'edi-set-hook)
+
+
    #+END_SRC
 * Другие настройки
 ** Отключение бекапов
