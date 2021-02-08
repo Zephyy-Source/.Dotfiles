@@ -1,7 +1,6 @@
 "Тут плагины
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } "Дерево выбора
-Plug 'airblade/vim-gitgutter' "Интеграция с git, ВОЗМОЖНО ЛАГАЕТ
 Plug 'tpope/vim-fugitive' "Интеграция с git
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "Улучшене nerdtree
 Plug 'adimit/prolog.vim' "Prolog
@@ -19,7 +18,7 @@ call plug#end()
 
 "настройка coc
 source $HOME/.config/nvim/plug-config/coc.vim
-source $HOME/.config/nvim/plug-config/gitgutter.vim
+
 
 "убрать цвет лини слева
 highlight! link SignColumn LineNr
