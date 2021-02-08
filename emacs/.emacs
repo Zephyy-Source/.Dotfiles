@@ -14,7 +14,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(diff-hl spaceline counsel-tramp counsel-test lsp-ivy counsel-projectile zzz-to-char ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode outshine flycheck-pyflakes elpy ediprolog company-shell company company-irony-c-headers flycheck-irony irony magit afternoon-theme iedit flycheck neotree)))
+   '(counsel-tramp lsp-ivy counsel-projectile ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode flycheck-pyflakes elpy ediprolog company-shell company magit afternoon-theme flycheck neotree)))
 
 ;;Расширение репозитория
 
