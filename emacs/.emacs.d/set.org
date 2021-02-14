@@ -63,6 +63,13 @@ package иницилизируется в .emacs
 	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 	  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
+	  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+	  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+	  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+	  (global-set-key (kbd "<f1> l") 'counsel-find-library)	  
+	  (global-set-key (kbd "<f1> b") 'counsel-descbinds)
+
+
 	  (global-set-key (kbd "<f2>") 'counsel-imenu)
 	  (global-set-key (kbd "<f12>") 'counsel-bookmark)
 	#+END_SRC
@@ -90,7 +97,23 @@ package иницилизируется в .emacs
    #+END_SRC
 ** Org-mode
    #+BEGIN_SRC emacs-lisp
-   (setq org-src-fontify-natively t)
+	 (setq org-src-fontify-natively t)
+
+	 (setq org-agenda-files '("~/.todo"))
+
+	 (setq calendar-week-start-day 1
+		   calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда" 
+												  "Четверг" "Пятница" "Суббота"]
+		   calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
+		   calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
+		   calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май" 
+											   "Июнь" "Июль" "Август" "Сентябрь"
+											   "Октябрь" "Ноябрь" "Декабрь"]
+		   calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
+
+
+	 (global-set-key (kbd "C-c a") 'org-agenda)
+	 (setq org-log-done t)
    #+END_SRC
 ** All-the-icons
    Иконки для других модов
@@ -106,8 +129,7 @@ package иницилизируется в .emacs
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
    (require 'neotree)
-   (global-unset-key (kbd "<f1>"))
-   (global-set-key (kbd "<f1>") 'neotree-toggle)
+   (global-set-key (kbd "<f5>") 'neotree-toggle)
    (setq neo-smart-open t)
    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
    #+END_SRC
@@ -118,6 +140,26 @@ package иницилизируется в .emacs
    (yas-reload-all)
    (add-hook 'prog-mode-hook #'yas-minor-mode)
    (add-hook 'org-mode-hook #'yas-minor-mode)
+   #+END_SRC
+** Calfw-org
+   #+BEGIN_SRC emacs-lisp
+	 (require 'calfw-org)
+
+	 (setq cfw:org-overwrite-default-keybinding t)
+
+	 (defun cfw:open-org-calendar-nonwork (&args)
+	   (interactive)
+	   (letq ((org-agenda-skip-function 'org-agenda-skip-work))
+		 (cfw:open-org-calendar)))
+
+	 (setq org-agenda-custom-commands
+		   '(;; …
+		 ("c" "calfw, non-work"
+		  cfw:open-org-calendar-nonwork)))
+   #+END_SRC
+** Dired
+   #+BEGIN_SRC emacs-lisp
+	 (setq dired-listing-switches "-agho --group-directories-first")
    #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
@@ -168,6 +210,19 @@ package иницилизируется в .emacs
 	(require 'lsp-java)
 	(add-hook 'java-mode-hook #'lsp)
 	#+END_SRC
+** Flycheck
+   Проверка синтаксиса
+   #+BEGIN_SRC emacs-lisp
+   (require 'flycheck)
+   (global-flycheck-mode t)
+   #+END_SRC
+** Sublimity
+   Плавный скроллинг
+   #+BEGIN_SRC emacs-lisp
+   (require 'sublimity)
+   (require 'sublimity-scroll)
+   (sublimity-mode 1)
+   #+END_SRC
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
@@ -188,12 +243,6 @@ package иницилизируется в .emacs
    #+BEGIN_SRC emacs-lisp
    (projectile-mode +1)
    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-   #+END_SRC
-** Flycheck
-   Проверка синтаксиса
-   #+BEGIN_SRC emacs-lisp
-   (require 'flycheck)
-   (global-flycheck-mode)
    #+END_SRC
 ** Tramp
    Использование данной конфигурации emacs 
@@ -241,7 +290,7 @@ package иницилизируется в .emacs
    #+END_SRC
 ** Кастомные бинды
    #+BEGIN_SRC emacs-lisp
-   (global-set-key (kbd "C-x O") 'window-swap-states)
+	 (global-set-key (kbd "C-x O") 'window-swap-states)
    #+END_SRC
 
 
