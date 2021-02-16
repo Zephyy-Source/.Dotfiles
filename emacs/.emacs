@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(calfw-org smooth-scroll sublimity counsel-tramp lsp-ivy counsel-projectile ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode flycheck-pyflakes elpy ediprolog company-shell company magit afternoon-theme flycheck neotree)))
+   '(sublimity counsel-tramp lsp-ivy counsel-projectile ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode flycheck-pyflakes elpy ediprolog company-shell company magit afternoon-theme flycheck neotree)))
 
 ;;Расширение репозитория
 

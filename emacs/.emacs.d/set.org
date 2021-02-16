@@ -147,23 +147,6 @@ package иницилизируется в .emacs
    (add-hook 'prog-mode-hook #'yas-minor-mode)
    (add-hook 'org-mode-hook #'yas-minor-mode)
    #+END_SRC
-** Calfw-org
-   #+BEGIN_SRC emacs-lisp
-   	 (require 'calfw)
-	 (require 'calfw-org)
-
-	 (setq cfw:org-overwrite-default-keybinding t)
-
-	 (defun cfw:open-org-calendar-nonwork (&args)
-	   (interactive)
-	   (letq ((org-agenda-skip-function 'org-agenda-skip-work))
-		 (cfw:open-org-calendar)))
-
-	 (setq org-agenda-custom-commands
-		   '(;; …
-		 ("c" "calfw, non-work"
-		  cfw:open-org-calendar-nonwork)))
-   #+END_SRC
 ** Dired
    #+BEGIN_SRC emacs-lisp
 	 (setq dired-listing-switches "-agho --group-directories-first")
