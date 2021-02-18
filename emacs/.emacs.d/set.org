@@ -210,6 +210,7 @@
 **** C-C++
 	 #+BEGIN_SRC emacs-lisp
 	   (use-package dap-cpptools
+	   :ensure nil
 	   :config (dap-cpptools-setup))
 	 #+END_SRC
 **** Python
@@ -217,6 +218,7 @@
 	 pip install ptvsd
 	 #+BEGIN_SRC emacs-lisp
 	 (use-package dap-python
+	 :ensure nil
 	 :after dap-mode)
 	 #+END_SRC
 *** C-C++
@@ -242,6 +244,7 @@
    #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
+   (use-package magit
    :ensure t
    :commands magit-status)
    #+END_SRC
