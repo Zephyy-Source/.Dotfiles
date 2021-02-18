@@ -1,6 +1,6 @@
 * Важные настройки
   В этой секции содержатся настройки, которые необходимо загрузить первыми.
-**  Отключение бекапов
+** Отключение бекапов
 	#+BEGIN_SRC emacs-lisp
 	(setq make-backup-files nil)
 	(setq auto-save-list-file-name nil)
@@ -9,14 +9,14 @@
 ** Локализация
    #+BEGIN_SRC emacs-lisp
 	 (setq calendar-week-start-day 1
-		calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда" 
-											   "Четверг" "Пятница" "Суббота"]
-		calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
-		calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
-		calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май" 
-											"Июнь" "Июль" "Август" "Сентябрь"
-											"Октябрь" "Ноябрь" "Декабрь"]
-		calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
+		   calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда" 
+												  "Четверг" "Пятница" "Суббота"]
+		   calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
+		   calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
+		   calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май" 
+											   "Июнь" "Июль" "Август" "Сентябрь"
+											   "Октябрь" "Ноябрь" "Декабрь"]
+		   calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
    #+END_SRC 
 * UI
   В этой секции содержатся настройки графического режима
@@ -45,8 +45,9 @@
    Jetbrains Mono
    Темы: afternoon, cherry-blossom
    #+BEGIN_SRC emacs-lisp
-     '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
-     (load-theme 'cherry-blossom t)
+	 '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
+	 (use-package cherry-blossom-theme
+	 :init (load-theme 'cherry-blossom t))
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
@@ -68,60 +69,60 @@
 ** Ivy
    Более удобное exo и другие плюшки
    #+BEGIN_SRC emacs-lisp
-   (use-package ivy
-   :config (ivy-mode t)
-   :custom
-   (ivy-use-virtual-buffers t)
-   (enable-recursive-minibuffers t))
+	 (use-package ivy
+		 :config (ivy-mode t)
+		 :custom
+		 (ivy-use-virtual-buffers t)
+		 (enable-recursive-minibuffers t))
    #+END_SRC
 *** Swiper
 	Прокаченный поиск через ivy
 	#+BEGIN_SRC emacs-lisp
-	(use-package swiper
-	:after ivy
-	:bind 	("C-s" . swiper)
-	("C-c C-r" . ivy-resume))
+	  (use-package swiper
+		  :after ivy
+		  :bind 	("C-s" . swiper)
+		  ("C-c C-r" . ivy-resume))
 	#+END_SRC
 *** Counsel
 	Улучшение для стандартных команд + 
 	#+BEGIN_SRC emacs-lisp
-	(use-package counsel
-	:after ivy
-	:bind ("M-x" . counsel-M-x)
-	("C-x C-f" . counsel-find-file)
-	("<f1> f" . counsel-describe-function)
-	("<f1> v" . counsel-describe-variable)
-	("<f1> o" . counsel-describe-symbol)
-	("<f1> l" . counsel-find-library)	  
-	("<f1> b" . counsel-descbinds)
+	  (use-package counsel
+		  :after ivy
+		  :bind ("M-x" . counsel-M-x)
+		  ("C-x C-f" . counsel-find-file)
+		  ("<f1> f" . counsel-describe-function)
+		  ("<f1> v" . counsel-describe-variable)
+		  ("<f1> o" . counsel-describe-symbol)
+		  ("<f1> l" . counsel-find-library)	  
+		  ("<f1> b" . counsel-descbinds)
 
-	("<f2>" . counsel-imenu)
-	("<f12>" . counsel-bookmark)
-	(:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
+		  ("<f2>" . counsel-imenu)
+		  ("<f12>" . counsel-bookmark)
+		  (:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
 	#+END_SRC
 **** counsel-tramp
 	 Подключение counsel к tramp
 	 #+BEGIN_SRC emacs-lisp
-	 (use-package counsel-tramp
-	 :after tramp
-	 :bind ("C-c s" . counsel-tramp))
+	   (use-package counsel-tramp
+		   :after tramp
+		   :bind ("C-c s" . counsel-tramp))
 	 #+END_SRC
 **** counsel-projectile
 	 Подключение counsel к projectile
 	 #+BEGIN_SRC emacs-lisp
-	 (use-package counsel-projectile
-	 :after projectile
-	 :config (counsel-projectile-mode 1))
+	   (use-package counsel-projectile
+		   :after projectile
+		   :config (counsel-projectile-mode 1))
 	 #+END_SRC
 ** Bookmark
    Закладки по тексту
    #+BEGIN_SRC emacs-lisp
 	 (use-package bookmark
-	 :ensure nil
-	 :init (when (file-exists-p (concat user-emacs-directory "bookmarks"))
-			   (bookmark-load bookmark-default-file t))
-	 :custom (bookmark-save-flag t)
-	 (bookmark-default-file (concat user-emacs-directory "bookmarks")))
+		 :ensure nil
+		 :init (when (file-exists-p (concat user-emacs-directory "bookmarks"))
+				   (bookmark-load bookmark-default-file t))
+		 :custom (bookmark-save-flag t)
+		 (bookmark-default-file (concat user-emacs-directory "bookmarks")))
    #+END_SRC
 ** Org-mode
    #+BEGIN_SRC emacs-lisp
@@ -145,152 +146,156 @@
    #+END_SRC
 *** All-the-icons-
 	#+BEGIN_SRC emacs-lisp
-	   (use-package all-the-icons-dired
-	   :hook (dired-mode . all-the-icons-dired-mode))
+	  (use-package all-the-icons-dired
+		  :hook (dired-mode . all-the-icons-dired-mode))
 	#+END_SRC
 ** Neotree
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
-   (use-package neotree
-   :bind ("<f5>" . neotree-toggle)
-   :custom (neo-smart-open t)
-   (neo-theme (if (display-graphic-p) 'icons 'arrow)))
+	 (use-package neotree
+		 :bind ("<f5>" . neotree-toggle)
+		 :custom (neo-smart-open t)
+		 (neo-theme (if (display-graphic-p) 'icons 'arrow)))
    #+END_SRC
 ** Yasnippet
    Снипеты дополнений для разных режимов
    #+BEGIN_SRC emacs-lisp
-   (use-package yasnippet
-   :config (yas-reload-all)
-   :hook (prog-mode . yas-minor-mode)
-   (org-mode . yas-minor-mode))
+	 (use-package yasnippet
+		 :config (yas-reload-all)
+		 :hook (prog-mode . yas-minor-mode)
+		 (org-mode . yas-minor-mode))
    #+END_SRC
 ** Dired
    #+BEGIN_SRC emacs-lisp
-   (use-package dired 
-   :ensure nil
-   :custom  (dired-listing-switches "-agho --group-directories-first"))
+	 (use-package dired 
+		 :ensure nil
+		 :custom  (dired-listing-switches "-agho --group-directories-first"))
    #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
-   (use-package lsp-mode 
-   :commands lsp
-   :hook (c-mode . lsp)
-   (c++-mode . lsp)
-   (lsp-mode . lsp-enable-which-key-integration)
-   :custom (lsp-keymap-prefix "C-c l")
-    )
+	 (use-package lsp-mode 
+		 :commands lsp
+		 :hook (c-mode . lsp)
+		 (c++-mode . lsp)
+		 (lsp-mode . lsp-enable-which-key-integration)
+		 :custom (lsp-keymap-prefix "C-c l"))
    #+END_SRC
 *** lsp-ui
 	Графический интерфейс для lsp
 	#+BEGIN_SRC emacs-lisp
 	  (use-package lsp-ui
-	  :after lsp-mode
-	  :config (lsp-ui-mode t)
-	  :bind (:map lsp-ui-mode-map (
-	  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-	  ([remap xref-find-references] . lsp-ui-peek-find-references)))
-	  :custom (lsp-ui-doc-delay 3)
-	  (lsp-ui-doc-position 'at-point)
-	  )
+		  :after lsp-mode
+		  :config (lsp-ui-mode t)
+		  :bind (:map lsp-ui-mode-map (
+									   ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+									   ([remap xref-find-references] . lsp-ui-peek-find-references)))
+		  :custom (lsp-ui-doc-delay 3)
+		  (lsp-ui-doc-position 'at-point))
 	#+END_SRC
 *** lsp-ivy
 	#+BEGIN_SRC emacs-lisp
-	(use-package lsp-ivy
-	:after lsp
-	)
+	  (use-package lsp-ivy
+		  :after lsp)
 	#+END_SRC
 *** dap-mode
 	Дебагер 
 	Для java дебагер поставляется lsp-java
 	#+BEGIN_SRC emacs-lisp
-	(use-package dap-mode
-	:commands dap-debug)
+	  (use-package dap-mode
+		  :commands dap-debug)
 	#+END_SRC
 **** C-C++
 	 #+BEGIN_SRC emacs-lisp
 	   (use-package dap-cpptools
-	   :ensure nil
-	   :config (dap-cpptools-setup))
+		   :ensure nil
+		   :config (dap-cpptools-setup))
 	 #+END_SRC
 **** Python
 	 Необходим ptvsd.
 	 pip install ptvsd
 	 #+BEGIN_SRC emacs-lisp
-	 (use-package dap-python
-	 :ensure nil
-	 :after dap-mode)
+	   (use-package dap-python
+		   :ensure nil
+		   :after dap-mode)
 	 #+END_SRC
 *** C-C++
 	Хуки в разделе lsp
 *** Python
 	#+BEGIN_SRC emacs-lisp
-	(use-package lsp-python-ms
-	:after lsp-mode
-	:hook (python-mode . lsp)
-	:custom (lsp-python-ms-auto-install-server))
+	  (use-package lsp-python-ms
+		  :after lsp-mode
+		  :hook (python-mode . lsp)
+		  :custom (lsp-python-ms-auto-install-server))
 	#+END_SRC
 *** Java
 	#+BEGIN_SRC emacs-lisp
-	(use-package lsp-java
-	:after lsp-mode
-	:hook (java-mode . lsp))
+	  (use-package lsp-java
+		  :after lsp-mode
+		  :hook (java-mode . lsp))
 	#+END_SRC
 ** Flycheck
    Проверка синтаксиса
    #+BEGIN_SRC emacs-lisp
-   (use-package flycheck
-   :hook (prog-mode . flycheck-mode))
+	 (use-package flycheck
+		 :hook (prog-mode . flycheck-mode))
    #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
-   (use-package magit
-   :ensure t
-   :commands magit-status)
+	 (use-package magit
+		 :ensure t
+		 :commands magit-status)
    #+END_SRC
 ** Sublimity
    Плавный скроллинг
    #+BEGIN_SRC emacs-lisp
-   (use-package sublimity
-   :config (require 'sublimity-scroll)
-   (sublimity-mode 1))
+	 (use-package sublimity
+		 :config (require 'sublimity-scroll)
+		 (sublimity-mode 1))
    #+END_SRC
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
-	 :config (global-company-mode)
-	 :custom (company-ide-delay 0)
-	 (company-minimum-prefix-length 1)
-	 (company-selection-wrap-around t))
+		 :config (global-company-mode)
+		 :custom (company-ide-delay 0)
+		 (company-minimum-prefix-length 1)
+		 (company-selection-wrap-around t))
    #+END_SRC
 *** Company-lsp
 	#+BEGIN_SRC emacs-lisp
-	(use-package company-lsp
-	:after (lsp company)
-	:config (push 'company-lsp company-backends))
-	#+END_SRC*** 
+	  (use-package company-lsp
+		  :after (lsp company)
+		  :config (push 'company-lsp company-backends))
+	#+END_SRC 
+*** Company-org
+	Для автодополнения "#+" функций в org файлах
+	#+BEGIN_SRC emacs-lisp
+	  (defun company-org-hook ()
+		  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
+	  (add-hook 'org-mode-hook #'company-org-hook)
+	#+END_SRC
 ** Which-key
    Подсказка биндов после нажатия C-x
    #+BEGIN_SRC emacs-lisp
-   (use-package which-key
-   :config (which-key-mode)
-   :custom (which-key-idle-delay 1))
+	 (use-package which-key
+		 :config (which-key-mode)
+		 :custom (which-key-idle-delay 1))
    #+END_SRC
 ** Projectile
    Навигация по проектам которые содержат системы контроля версий
    либо файл .projectile
    #+BEGIN_SRC emacs-lisp
-   (use-package projectile
-   :config (projectile-mode +1)
-   :bind-keymap ("C-c p" . projectile-command-map))
+	 (use-package projectile
+		 :config (projectile-mode +1)
+		 :bind-keymap ("C-c p" . projectile-command-map))
    #+END_SRC
 ** Tramp
    Использование данной конфигурации emacs 
    для доступа к удалённым серверам
    #+BEGIN_SRC emacs-lisp
-   (use-package tramp
-   :init (setq tramp-default-method "ssh"))
+	 (use-package tramp
+		 :init (setq tramp-default-method "ssh"))
    #+END_SRC
 * Другие настройки
   Менее важные настройки
