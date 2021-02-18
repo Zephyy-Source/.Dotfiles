@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(sublimity counsel-tramp lsp-ivy counsel-projectile ivy ## projectile all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode flycheck-pyflakes elpy ediprolog company-shell company magit afternoon-theme flycheck neotree)))
+   '(which-key yasnippet dap-pyhon dap-cpptools lsp use-package counsel-tramp sublimity lsp-ivy counsel-projectile ## all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode company-shell company magit afternoon-theme flycheck neotree)))
 
 ;;Расширение репозитория
 
@@ -23,10 +23,16 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-;; Автоскачивание плагинов
-(unless package-archive-contents
-  (package-refresh-contents))
-(package-install-selected-packages)
+;; Автоскачивание пакетов
+(unless (package-installed-p 'use-package)
+							 (package-refresh-contents)
+							 'package-install 'use-package)
+(require 'use-package)
+(setq use-package-always-ensure t)
+;; (setq use-package-verbose t) ;; Логирование запуска
+;;(unless package-archive-contents
+;;  (package-refresh-contents))
+;; (package-install-selected-packages)
 
 (setq vc-follow-symlinks t)
 

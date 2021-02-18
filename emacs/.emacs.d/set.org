@@ -1,4 +1,25 @@
+* Важные настройки
+  В этой секции содержатся настройки, которые необходимо загрузить первыми.
+**  Отключение бекапов
+	#+BEGIN_SRC emacs-lisp
+	(setq make-backup-files nil)
+	(setq auto-save-list-file-name nil)
+	(setq auto-save-default nil)
+	#+END_SRC
+** Локализация
+   #+BEGIN_SRC emacs-lisp
+	 (setq calendar-week-start-day 1
+		calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда" 
+											   "Четверг" "Пятница" "Суббота"]
+		calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
+		calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
+		calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май" 
+											"Июнь" "Июль" "Август" "Сентябрь"
+											"Октябрь" "Ноябрь" "Декабрь"]
+		calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
+   #+END_SRC 
 * UI
+  В этой секции содержатся настройки графического режима
 ** Скобочки
    Paren-mode - парные скобки.
    electric - автотабулиция и автопарные скобки
@@ -41,228 +62,235 @@
    #+BEGIN_SRC emacs-lisp
    (add-hook 'prog-mode-hook #'display-line-numbers-mode)
    #+END_SRC
-* Plugins
-package иницилизируется в .emacs
+* Packages
+  В этой секции содержатся настройки пакетов
+  package и use-package инициализируются в [[file:~/.Dotfiles/emacs/.emacs][.emacs]]
 ** Ivy
    Более удобное exo и другие плюшки
    #+BEGIN_SRC emacs-lisp
-	 (ivy-mode 1)
-	 (setq ivy-use-virtual-buffers t)
-	 (setq enable-recursive-minibuffers t)
+   (use-package ivy
+   :config (ivy-mode t)
+   :custom
+   (ivy-use-virtual-buffers t)
+   (enable-recursive-minibuffers t))
    #+END_SRC
 *** Swiper
 	Прокаченный поиск через ivy
 	#+BEGIN_SRC emacs-lisp
-	(global-set-key "\C-s" 'swiper)
-	(global-set-key (kbd "C-c C-r") 'ivy-resume)
+	(use-package swiper
+	:after ivy
+	:bind 	("C-s" . swiper)
+	("C-c C-r" . ivy-resume))
 	#+END_SRC
 *** Counsel
 	Улучшение для стандартных команд + 
 	#+BEGIN_SRC emacs-lisp
-	  (global-set-key (kbd "M-x") 'counsel-M-x)
-	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-	  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+	(use-package counsel
+	:after ivy
+	:bind ("M-x" . counsel-M-x)
+	("C-x C-f" . counsel-find-file)
+	("<f1> f" . counsel-describe-function)
+	("<f1> v" . counsel-describe-variable)
+	("<f1> o" . counsel-describe-symbol)
+	("<f1> l" . counsel-find-library)	  
+	("<f1> b" . counsel-descbinds)
 
-	  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-	  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-	  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-	  (global-set-key (kbd "<f1> l") 'counsel-find-library)	  
-	  (global-set-key (kbd "<f1> b") 'counsel-descbinds)
-
-
-	  (global-set-key (kbd "<f2>") 'counsel-imenu)
-	  (global-set-key (kbd "<f12>") 'counsel-bookmark)
+	("<f2>" . counsel-imenu)
+	("<f12>" . counsel-bookmark)
+	(:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
 	#+END_SRC
 **** counsel-tramp
 	 Подключение counsel к tramp
 	 #+BEGIN_SRC emacs-lisp
-	 (define-key global-map (kbd "C-c s") 'counsel-tramp)
+	 (use-package counsel-tramp
+	 :after tramp
+	 :bind ("C-c s" . counsel-tramp))
 	 #+END_SRC
 **** counsel-projectile
 	 Подключение counsel к projectile
 	 #+BEGIN_SRC emacs-lisp
-	 (counsel-projectile-mode 1)
+	 (use-package counsel-projectile
+	 :after projectile
+	 :config (counsel-projectile-mode 1))
 	 #+END_SRC
-
 ** Bookmark
    Закладки по тексту
    #+BEGIN_SRC emacs-lisp
-   (require 'bookmark)
-   
-   (setq bookmark-save-flag t)
-   (when (file-exists-p (concat user-emacs-directory "bookmarks"))
-   		(bookmark-load bookmark-default-file t))
-
-   (setq bookmark-default-file (concat user-emacs-directory "bookmarks"))
+	 (use-package bookmark
+	 :ensure nil
+	 :init (when (file-exists-p (concat user-emacs-directory "bookmarks"))
+			   (bookmark-load bookmark-default-file t))
+	 :custom (bookmark-save-flag t)
+	 (bookmark-default-file (concat user-emacs-directory "bookmarks")))
    #+END_SRC
 ** Org-mode
    #+BEGIN_SRC emacs-lisp
-		  (setq org-src-fontify-natively t)
+	 (use-package org
+		 :ensure nil
+		 :bind ("C-c a" . org-agenda)
+		 :custom (org-src-fontify-natively t)
+		 (org-agenda-files '("~/.todo"))
 
-		  (setq org-agenda-files '("~/.todo"))
-
-		  (setq calendar-week-start-day 1
-				calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда" 
-													   "Четверг" "Пятница" "Суббота"]
-				calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
-				calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
-				calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май" 
-													"Июнь" "Июль" "Август" "Сентябрь"
-													"Октябрь" "Ноябрь" "Декабрь"]
-				calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
-
-
-		  (global-set-key (kbd "C-c a") 'org-agenda)
-		  (setq org-log-done t)
-
-		  (setq org-format-latex-options 
-				'(:foreground default :background default :scale 1.4
-				  :html-foreground "Black" :html-background "Transparent"
-				  :html-scale 1.0 :matchers
-				  ("begin" "$1" "$" "$$" "\\(" "\\[")))
+		 (org-log-done t)
+		 (org-format-latex-options 
+		  '(:foreground default :background default :scale 1.4
+			:html-foreground "Black" :html-background "Transparent"
+			:html-scale 1.0 :matchers
+			("begin" "$1" "$" "$$" "\\(" "\\["))))
    #+END_SRC
 ** All-the-icons
    Иконки для других модов
    #+BEGIN_SRC emacs-lisp
-   (require 'all-the-icons)
+   (use-package all-the-icons)
    #+END_SRC
-*** all-the-icons-dired
-	Иконки в dired
+*** All-the-icons-
 	#+BEGIN_SRC emacs-lisp
-	(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+	   (use-package all-the-icons-dired
+	   :hook (dired-mode . all-the-icons-dired-mode))
 	#+END_SRC
 ** Neotree
    Файловый браузер на <f1>
    #+BEGIN_SRC emacs-lisp
-   (require 'neotree)
-   (global-set-key (kbd "<f5>") 'neotree-toggle)
-   (setq neo-smart-open t)
-   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+   (use-package neotree
+   :bind ("<f5>" . neotree-toggle)
+   :custom (neo-smart-open t)
+   (neo-theme (if (display-graphic-p) 'icons 'arrow)))
    #+END_SRC
 ** Yasnippet
    Снипеты дополнений для разных режимов
    #+BEGIN_SRC emacs-lisp
-   (require 'yasnippet)
-   (yas-reload-all)
-   (add-hook 'prog-mode-hook #'yas-minor-mode)
-   (add-hook 'org-mode-hook #'yas-minor-mode)
+   (use-package yasnippet
+   :config (yas-reload-all)
+   :hook (prog-mode . yas-minor-mode)
+   (org-mode . yas-minor-mode))
    #+END_SRC
 ** Dired
    #+BEGIN_SRC emacs-lisp
-	 (setq dired-listing-switches "-agho --group-directories-first")
+   (use-package dired 
+   :ensure nil
+   :custom  (dired-listing-switches "-agho --group-directories-first"))
    #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
-   (require 'lsp-mode)
+   (use-package lsp-mode 
+   :commands lsp
+   :hook (c-mode . lsp)
+   (c++-mode . lsp)
+   (lsp-mode . lsp-enable-which-key-integration)
+   :custom (lsp-keymap-prefix "C-c l")
+    )
    #+END_SRC
 *** lsp-ui
 	Графический интерфейс для lsp
 	#+BEGIN_SRC emacs-lisp
-	  (lsp-ui-mode t)
-	  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-	  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-
-	  (setq lsp-ui-doc-delay 3)
-	  (setq lsp-ui-doc-position 'at-point)
+	  (use-package lsp-ui
+	  :after lsp-mode
+	  :config (lsp-ui-mode t)
+	  :bind (:map lsp-ui-mode-map (
+	  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+	  ([remap xref-find-references] . lsp-ui-peek-find-references)))
+	  :custom (lsp-ui-doc-delay 3)
+	  (lsp-ui-doc-position 'at-point)
+	  )
+	#+END_SRC
+*** lsp-ivy
+	#+BEGIN_SRC emacs-lisp
+	(use-package lsp-ivy
+	:after lsp
+	)
 	#+END_SRC
 *** dap-mode
 	Дебагер 
 	Для java дебагер поставляется lsp-java
 	#+BEGIN_SRC emacs-lisp
-	  (require 'dap-mode)
+	(use-package dap-mode
+	:commands dap-debug)
 	#+END_SRC
 **** C-C++
 	 #+BEGIN_SRC emacs-lisp
-	   (require 'dap-cpptools)
-	   (with-eval-after-load "dap-cpptools"
-		   (dap-cpptools-setup))
+	   (use-package dap-cpptools
+	   :config (dap-cpptools-setup))
 	 #+END_SRC
 **** Python
 	 Необходим ptvsd.
 	 pip install ptvsd
 	 #+BEGIN_SRC emacs-lisp
-	 (require 'dap-python)
+	 (use-package dap-python
+	 :after dap-mode)
 	 #+END_SRC
 *** C-C++
-	#+BEGIN_SRC emacs-lisp
-	(add-hook 'c-mode-hook #'lsp)
-	(add-hook 'c++-mode-hook #'lsp)
-	#+END_SRC
+	Хуки в разделе lsp
 *** Python
 	#+BEGIN_SRC emacs-lisp
-	(require 'lsp-python-ms)
-	(setq lsp-python-ms-auto-install-server t)
-	(add-hook 'python-mode-hook #'lsp)
+	(use-package lsp-python-ms
+	:after lsp-mode
+	:hook (python-mode . lsp)
+	:custom (lsp-python-ms-auto-install-server))
 	#+END_SRC
 *** Java
 	#+BEGIN_SRC emacs-lisp
-	(require 'lsp-java)
-	(add-hook 'java-mode-hook #'lsp)
+	(use-package lsp-java
+	:after lsp-mode
+	:hook (java-mode . lsp))
 	#+END_SRC
 ** Flycheck
    Проверка синтаксиса
    #+BEGIN_SRC emacs-lisp
-   (require 'flycheck)
-   (global-flycheck-mode t)
+   (use-package flycheck
+   :hook (prog-mode . flycheck-mode))
+   #+END_SRC
+** Magit
+   #+BEGIN_SRC emacs-lisp
+   :ensure t
+   :commands magit-status)
    #+END_SRC
 ** Sublimity
    Плавный скроллинг
    #+BEGIN_SRC emacs-lisp
-   (require 'sublimity)
-   (require 'sublimity-scroll)
-   (sublimity-mode 1)
+   (use-package sublimity
+   :config (require 'sublimity-scroll)
+   (sublimity-mode 1))
    #+END_SRC
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
-	 (require 'company)
-	 (add-hook 'after-init-hook 'global-company-mode)
-	 (setq company-idle-delay 0)
-	 (setq company-minimum-prefix-length 1) 
-	 (setq company-selection-wrap-around t)
+	 (use-package company
+	 :config (global-company-mode)
+	 :custom (company-ide-delay 0)
+	 (company-minimum-prefix-length 1)
+	 (company-selection-wrap-around t))
    #+END_SRC
 *** Company-lsp
 	#+BEGIN_SRC emacs-lisp
-	(require 'company-lsp)
-	(push 'company-lsp company-backends)
+	(use-package company-lsp
+	:after (lsp company)
+	:config (push 'company-lsp company-backends))
 	#+END_SRC*** 
+** Which-key
+   Подсказка биндов после нажатия C-x
+   #+BEGIN_SRC emacs-lisp
+   (use-package which-key
+   :config (which-key-mode)
+   :custom (which-key-idle-delay 1))
+   #+END_SRC
 ** Projectile
    Навигация по проектам которые содержат системы контроля версий
    либо файл .projectile
    #+BEGIN_SRC emacs-lisp
-   (projectile-mode +1)
-   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+   (use-package projectile
+   :config (projectile-mode +1)
+   :bind-keymap ("C-c p" . projectile-command-map))
    #+END_SRC
 ** Tramp
    Использование данной конфигурации emacs 
    для доступа к удалённым серверам
    #+BEGIN_SRC emacs-lisp
-   (require 'tramp)
-   (setq tramp-default-method "ssh")
-   #+END_SRC
-** Ediprolog
-   Выpполнение кода prolog по нажатию f9
-   #+BEGIN_SRC emacs-lisp
-	 (require 'ediprolog)
-
-	 (defun edi-set-hook()
-		 (local-set-key (kbd "<f9>") 'ediprolog-dwim)
-		 (setq ediprolog-group "swi")
-		 (setq ediprolog-program "/usr/bin/swipl")
-		 (setq ediprolog-system 'swi))
-
-	 (add-hook 'prolog-mode-hook'edi-set-hook)
-
-
+   (use-package tramp
+   :init (setq tramp-default-method "ssh"))
    #+END_SRC
 * Другие настройки
-** Отключение бекапов
-   #+BEGIN_SRC emacs-lisp
-   (setq make-backup-files nil)
-   (setq auto-save-list-file-name nil)
-   (setq auto-save-default nil)
-   #+END_SRC
+  Менее важные настройки
 ** Общий буфер обмена
    #+BEGIN_SRC emacs-lisp
    (setq x-select-enable-clipboard t)
