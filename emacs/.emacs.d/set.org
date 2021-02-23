@@ -51,12 +51,12 @@
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
-	 (setq-default tab-width 4)
-	 (setq-default c-basic-offset 4)
-	 (setq-default standart-indent 4)
-	 (setq-default lisp-body-indent 4)
+	 ;; (setq-default tab-width 4)
+	 ;; (setq-default c-basic-offset 4)
+	 ;; (setq-default standart-indent 4)
+	 ;; (setq-default lisp-body-indent 4)
 	 (setq backward-delete-char-untabify-method 'hungry)
-	 (setq lisp-indent-function  'common-lisp-indent-function)
+	 ;;(setq lisp-indent-function  'common-lisp-indent-function)
    #+END_SRC
 ** Нумерация строк
    Нумерация включена для всех программных модов
@@ -252,6 +252,11 @@
 	 (use-package sublimity
 		 :config (require 'sublimity-scroll)
 		 (sublimity-mode 1))
+   #+END_SRC
+** Vterm
+   Полноценный эмулятор терминала
+   #+BEGIN_SRC emacs-lisp
+   (use-package vterm)
    #+END_SRC
 ** Company
    Автодополнение

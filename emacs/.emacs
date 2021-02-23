@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy counsel-projectile ## all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode company-shell company magit afternoon-theme flycheck neotree)))
+   '(vterm use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy counsel-projectile ## all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode company-shell company magit afternoon-theme flycheck neotree)))
 
 ;;Расширение репозитория
 
