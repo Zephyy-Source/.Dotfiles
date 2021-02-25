@@ -96,6 +96,7 @@
 		  ("<f1> l" . counsel-find-library)	  
 		  ("<f1> b" . counsel-descbinds)
 
+		  ("<f6>" . counsel-org-capture) 
 		  ("<f2>" . counsel-imenu)
 		  ("<f12>" . counsel-bookmark)
 		  (:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
@@ -144,6 +145,11 @@
    #+BEGIN_SRC emacs-lisp
    (use-package all-the-icons)
    #+END_SRC
+*** Treemacs-all-the-icons
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs-all-the-icons
+	:config (treemacs-load-theme "all-the-icons"))
+    #+END_SRC
 *** All-the-icons-
 	#+BEGIN_SRC emacs-lisp
 	  (use-package all-the-icons-dired
@@ -240,6 +246,23 @@
 	 (use-package flycheck
 		 :hook (prog-mode . flycheck-mode))
    #+END_SRC
+** Treemacs
+   #+BEGIN_SRC emacs-lisp
+      (use-package treemacs
+	:defer t
+	:bind ("C-c t"   . treemacs)
+	:config (treemacs-git-mode 'deferred))
+   #+END_SRC
+*** Treemacs-projectile
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs-projectile
+	:after (treemacs projectile))
+    #+END_SRC
+*** Treemacs-magit
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs-magit
+	:after (treemacs magit))
+    #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
 	 (use-package magit
@@ -252,11 +275,6 @@
 	 (use-package sublimity
 		 :config (require 'sublimity-scroll)
 		 (sublimity-mode 1))
-   #+END_SRC
-** Vterm
-   Полноценный эмулятор терминала
-   #+BEGIN_SRC emacs-lisp
-   (use-package vterm)
    #+END_SRC
 ** Company
    Автодополнение
@@ -291,9 +309,9 @@
    Навигация по проектам которые содержат системы контроля версий
    либо файл .projectile
    #+BEGIN_SRC emacs-lisp
-	 (use-package projectile
-		 :config (projectile-mode +1)
-		 :bind-keymap ("C-c p" . projectile-command-map))
+     (use-package projectile
+	     :config (projectile-mode +1)
+	     :bind-keymap ("C-c p" . projectile-command-map))
    #+END_SRC
 ** Tramp
    Использование данной конфигурации emacs 
