@@ -115,6 +115,27 @@
 		   :after projectile
 		   :config (counsel-projectile-mode 1))
 	 #+END_SRC
+*** ivy-rich
+    #+BEGIN_SRC emacs-lisp
+      (use-package ivy-rich
+	:after ivy
+	:config (ivy-rich-mode 1))
+    #+END_SRC
+*** ivy-todo
+    #+BEGIN_SRC emacs-lisp
+      (use-package ivy-todo
+	:after ivy
+	:bind ("C-c i" . ivy-todo)
+	:commands ivy-todo
+	:init (setq ivy-todo-file "~/.todo/ivy-todo.org")
+	:custom (ivy-todo-default-tags '("PROJECT")))
+    #+END_SRC
+*** ivy-yasnipets
+    #+BEGIN_SRC emacs-lisp
+      (use-package ivy-yasnippet
+	:after (ivy yasnippet)
+	:bind ("C-c y" . ivy-yasnippet))
+    #+END_SRC
 ** Bookmark
    Закладки по тексту
    #+BEGIN_SRC emacs-lisp
@@ -171,6 +192,11 @@
 		 :hook (prog-mode . yas-minor-mode)
 		 (org-mode . yas-minor-mode))
    #+END_SRC
+*** yasnippet-snippets
+    #+BEGIN_SRC emacs-lisp
+      (use-package yasnippet-snippets
+      :after yasnippet)
+    #+END_SRC
 ** Dired
    #+BEGIN_SRC emacs-lisp
 	 (use-package dired 
