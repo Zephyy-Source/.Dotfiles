@@ -51,7 +51,7 @@
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
-	 ;; (setq-default tab-width 4)
+	 (setq-default tab-width 4)
 	 ;; (setq-default c-basic-offset 4)
 	 ;; (setq-default standart-indent 4)
 	 ;; (setq-default lisp-body-indent 4)
@@ -115,12 +115,6 @@
 		   :after projectile
 		   :config (counsel-projectile-mode 1))
 	 #+END_SRC
-*** ivy-rich
-    #+BEGIN_SRC emacs-lisp
-      (use-package ivy-rich
-	:after ivy
-	:config (ivy-rich-mode 1))
-    #+END_SRC
 *** ivy-todo
     #+BEGIN_SRC emacs-lisp
       (use-package ivy-todo
