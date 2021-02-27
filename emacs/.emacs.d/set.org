@@ -219,6 +219,13 @@
 		  :custom (lsp-ui-doc-delay 3)
 		  (lsp-ui-doc-position 'at-point))
 	#+END_SRC
+*** lsp-treemacs
+    #+BEGIN_SRC emacs-lisp
+      (use-package lsp-treemacs
+	:ensure nil
+	:after (lsp treemacs)
+	:config (lsp-treemacs-sync-mode 1))
+    #+END_SRC
 *** lsp-ivy
 	#+BEGIN_SRC emacs-lisp
 	  (use-package lsp-ivy
