@@ -313,19 +313,21 @@
       (use-package treemacs-magit
 	:after (treemacs magit))
     #+END_SRC
+** Hl-todo
+   #+BEGIN_SRC emacs-lisp
+	 (use-package hl-todo
+	   :hook (prog-mode . hl-todo-mode))
+   #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
 	 (use-package magit
-		 :ensure t
 		 :commands magit-status)
    #+END_SRC
-** Sublimity
-   Плавный скроллинг
-   #+BEGIN_SRC emacs-lisp
-	 (use-package sublimity
-		 :config (require 'sublimity-scroll)
-		 (sublimity-mode 1))
-   #+END_SRC
+*** magit-todos
+	#+BEGIN_SRC emacs-lisp
+	  (use-package magit-todos
+		:after (magit))
+	#+END_SRC
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
