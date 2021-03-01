@@ -33,6 +33,19 @@
    #+BEGIN_SRC emacs-lisp
 	 (setq frame-title-format "GNU Emacs: %b")
    #+END_SRC
+** Шрифт и тема
+   Jetbrains Mono
+   Темы: afternoon, cherry-blossom
+   #+BEGIN_SRC emacs-lisp
+	 (use-package doom-themes
+	   :init (load-theme 'doom-Iosvkem t)
+	   :config 
+	   (setq doom-themes-treemacs-theme "doom-colors")
+	   (doom-themes-treemacs-config)
+	   (doom-themes-org-config))
+
+	 (setq default-frame-alist '((font . "JetBrains Mono-10")))
+   #+END_SRC
 ** Отключение графических элементов
    Меню и скроллбары
    #+BEGIN_SRC emacs-lisp
@@ -40,14 +53,6 @@
    (tool-bar-mode -1)
    (scroll-bar-mode -1)
    (setq inhibit-startup-screen t)
-   #+END_SRC
-** Шрифт и тема
-   Jetbrains Mono
-   Темы: afternoon, cherry-blossom
-   #+BEGIN_SRC emacs-lisp
-	 '(default ((t (:family "JetBrains Mono" :foundry "JB" :slant normal :weight normal :height 98 :width normal))))
-	 (use-package cherry-blossom-theme
-	 :init (load-theme 'cherry-blossom t))
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
@@ -71,8 +76,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package ivy
 		 :config (ivy-mode t)
-		 :custom
-		 (ivy-use-virtual-buffers t)
+		 :custom (ivy-use-virtual-buffers t)
 		 (enable-recursive-minibuffers t))
    #+END_SRC
 *** Swiper
@@ -80,7 +84,7 @@
 	#+BEGIN_SRC emacs-lisp
 	  (use-package swiper
 		  :after ivy
-		  :bind 	("C-s" . swiper)
+		  :bind ("C-s" . swiper)
 		  ("C-c C-r" . ivy-resume))
 	#+END_SRC
 *** Counsel
@@ -204,6 +208,13 @@
 		 :ensure nil
 		 :custom  (dired-listing-switches "-agho --group-directories-first"))
    #+END_SRC
+** Doom-modeline
+   #+BEGIN_SRC emacs-lisp
+	 (use-package doom-modeline
+	   :init (doom-modeline-mode 1)
+	   :custom (doom-modeline-minor-modes t)
+	   (doom-modeline-icon t))
+   #+END_SRC
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
@@ -274,6 +285,11 @@
 		  :after lsp-mode
 		  :hook (java-mode . lsp))
 	#+END_SRC
+** Minions
+   #+BEGIN_SRC emacs-lisp
+	 (use-package minions
+	   :config (minions-mode t))
+   #+END_SRC
 ** Flycheck
    Проверка синтаксиса
    #+BEGIN_SRC emacs-lisp

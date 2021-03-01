@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(yasnippet-snippets ivy-yasnippet ivy-todo ivy-rich treemacs-magit treemacs-projectile treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy counsel-projectile ## all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode company-shell company magit afternoon-theme flycheck neotree)))
+   '(minions yasnippet-snippets ivy-yasnippet ivy-todo ivy-rich treemacs-magit treemacs-projectile treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy counsel-projectile ## all-the-icons-dired all-the-icons cherry-blossom-theme lsp-java tramp lsp-python-ms company-lsp lsp-ui lsp-mode company-shell company magit afternoon-theme flycheck neotree)))
 
 ;;Расширение репозитория
 
