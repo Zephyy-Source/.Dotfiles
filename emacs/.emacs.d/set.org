@@ -100,8 +100,8 @@
 		  ("<f1> l" . counsel-find-library)	  
 		  ("<f1> b" . counsel-descbinds)
 
-		  ("<f6>" . counsel-org-capture) 
-		  ("<f2>" . counsel-imenu)
+		  ("<f2>" . counsel-org-capture) 
+		  ("<f5>" . counsel-imenu)
 		  ("<f12>" . counsel-bookmark)
 		  (:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
 	#+END_SRC
@@ -120,29 +120,15 @@
 		   :config (counsel-projectile-mode 1))
 	 #+END_SRC
 *** ivy-rich
+	ivy буферы в виде таблицы.
     #+BEGIN_SRC emacs-lisp
 		(use-package ivy-rich
 	  :after ivy
 	  :config (ivy-rich-mode 1)
 	  (ivy-rich-project-root-cache-mode t))
     #+END_SRC
-*** ivy-todo
-    #+BEGIN_SRC emacs-lisp
-      (use-package ivy-todo
-	:after ivy
-	:bind ("C-c i" . ivy-todo)
-	:commands ivy-todo
-	:init (setq ivy-todo-file "~/.todo/ivy-todo.org")
-	:custom (ivy-todo-default-tags '("PROJECT")))
-    #+END_SRC
-*** ivy-yasnipets
-    #+BEGIN_SRC emacs-lisp
-      (use-package ivy-yasnippet
-	:after (ivy yasnippet)
-	:bind ("C-c y" . ivy-yasnippet))
-    #+END_SRC
 ** Bookmark
-   Закладки по тексту
+   Закладки по тексту (встроенный)
    #+BEGIN_SRC emacs-lisp
 	 (use-package bookmark
 		 :ensure nil
@@ -152,23 +138,30 @@
 		 (bookmark-default-file (concat user-emacs-directory "bookmarks")))
    #+END_SRC
 ** Org-mode
+   Конфигурация для org-mode (встроенный)
    #+BEGIN_SRC emacs-lisp
-     (use-package org
-	     :ensure nil
-	     :bind ("C-c a" . org-agenda)
-	     :custom (org-src-fontify-natively t)
-	     (org-agenda-files '("~/.todo"))
-	     (org-default-notes-file "~/.notes.org")
+	 (use-package org
+		 :ensure nil
+		 :bind ("C-c a" . org-agenda)
+		 ("C-c c" . org-capture)
+		 :custom (org-src-fontify-natively t)
+		 (org-agenda-files (directory-files-recursively "~/.todo/" "org$"))
+		 (org-default-notes-file "~/.todo/notes.org")
 
-	     (org-log-done t)
-	     (org-format-latex-options 
-	      '(:foreground default :background default :scale 1.4
-		    :html-foreground "Black" :html-background "Transparent"
-		    :html-scale 1.0 :matchers
-		    ("begin" "$1" "$" "$$" "\\(" "\\["))))
+		 (org-log-done t)
+		 (org-format-latex-options 
+		  '(:foreground default :background default :scale 1.4
+			:html-foreground "Black" :html-background "Transparent"
+			:html-scale 1.0 :matchers
+			("begin" "$1" "$" "$$" "\\(" "\\["))))
    #+END_SRC
+*** org-bullets
+	#+BEGIN_SRC emacs-lisp
+	  (use-package org-superstar
+		:hook (org-mode . org-superstar-mode))
+	#+END_SRC
 ** All-the-icons
-   Иконки для других модов
+   Иконки для других пакетов
    #+BEGIN_SRC emacs-lisp
    (use-package all-the-icons)
    #+END_SRC
@@ -182,14 +175,6 @@
 	  (use-package all-the-icons-dired
 		  :hook (dired-mode . all-the-icons-dired-mode))
 	#+END_SRC
-** Neotree
-   Файловый браузер на <f1>
-   #+BEGIN_SRC emacs-lisp
-	 (use-package neotree
-		 :bind ("<f5>" . neotree-toggle)
-		 :custom (neo-smart-open t)
-		 (neo-theme (if (display-graphic-p) 'icons 'arrow)))
-   #+END_SRC
 ** Yasnippet
    Снипеты дополнений для разных режимов
    #+BEGIN_SRC emacs-lisp
@@ -198,18 +183,15 @@
 		 :hook (prog-mode . yas-minor-mode)
 		 (org-mode . yas-minor-mode))
    #+END_SRC
-*** yasnippet-snippets
-    #+BEGIN_SRC emacs-lisp
-      (use-package yasnippet-snippets
-      :after yasnippet)
-    #+END_SRC
 ** Dired
+   Редактор директорий (встроенный)
    #+BEGIN_SRC emacs-lisp
 	 (use-package dired 
 		 :ensure nil
 		 :custom  (dired-listing-switches "-agho --group-directories-first"))
    #+END_SRC
 ** Doom-modeline
+   Панель режимов из doom emacs
    #+BEGIN_SRC emacs-lisp
 	 (use-package doom-modeline
 	   :init (doom-modeline-mode 1)
@@ -287,6 +269,7 @@
 		  :hook (java-mode . lsp))
 	#+END_SRC
 ** Minions
+   Спрятать минорные режимы
    #+BEGIN_SRC emacs-lisp
 	 (use-package minions
 	   :config (minions-mode t))
@@ -298,6 +281,7 @@
 		 :hook (prog-mode . flycheck-mode))
    #+END_SRC
 ** Treemacs
+   Дерево проектов
    #+BEGIN_SRC emacs-lisp
       (use-package treemacs
 	:defer t
@@ -305,35 +289,45 @@
 	:config (treemacs-git-mode 'deferred))
    #+END_SRC
 *** Treemacs-projectile
+	Связь projectile и treemacs
     #+BEGIN_SRC emacs-lisp
       (use-package treemacs-projectile
 	:after (treemacs projectile))
     #+END_SRC
 *** Treemacs-magit
+	Связь treemacs и magit
     #+BEGIN_SRC emacs-lisp
       (use-package treemacs-magit
 	:after (treemacs magit))
     #+END_SRC
-** Hl-todo
+** Comment-tags
+   Подсветка и навигация по TODO комментариям.
    #+BEGIN_SRC emacs-lisp
-	 (use-package hl-todo
-	   :hook (prog-mode . hl-todo-mode))
+	 (use-package comment-tags
+	   :hook (prog-mode . comment-tags-mode)
+	   :custom (comment-tags-keymap-prefix (kbd "C-c #"))
+	   (comment-tags-keyword-faces
+			 `(("TODO" . ,(list :weight 'bold :foreground "#28ABE3"))
+			   ("FIXME" . ,(list :weight 'bold :foreground "#DB3340"))
+			   ("BUG" . ,(list :weight 'bold :foreground "#DB3340"))
+			   ("HACK" . ,(list :weight 'bold :foreground "#E8B71A"))
+			   ("KLUDGE" . ,(list :weight 'bold :foreground "#E8B71A"))
+			   ("XXX" . ,(list :weight 'bold :foreground "#F7EAC8"))
+			   ("INFO" . ,(list :weight 'bold :foreground "#F7EAC8"))
+			   ("DONE" . ,(list :weight 'bold :foreground "#1FDA9A")))))
    #+END_SRC
 ** Magit
+   Интерфейс для взаимодействия с git
    #+BEGIN_SRC emacs-lisp
 	 (use-package magit
 		 :commands magit-status)
    #+END_SRC
-*** magit-todos
-	#+BEGIN_SRC emacs-lisp
-	  (use-package magit-todos
-		:after (magit))
-	#+END_SRC
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
-		 :config (global-company-mode)
+		 :hook (prog-mode . company-mode)
+		 (org-mode . company-mode)
 		 :custom (company-ide-delay 0)
 		 (company-minimum-prefix-length 1)
 		 (company-selection-wrap-around t))
