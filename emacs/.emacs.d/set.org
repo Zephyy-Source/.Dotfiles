@@ -56,6 +56,7 @@
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
+	 (setq-default indent-tabs-mode nil)
 	 (setq-default tab-width 4)
 	 ;; (setq-default c-basic-offset 4)
 	 ;; (setq-default standart-indent 4)
@@ -119,6 +120,12 @@
 		   :after projectile
 		   :config (counsel-projectile-mode 1))
 	 #+END_SRC
+*** ivy-hydra
+	Удобно для выбора нескольких вариантов в lsp.
+	C-o - m(ark)
+	#+BEGIN_SRC emacs-lisp
+	  (use-package ivy-hydra)
+	#+END_SRC
 *** ivy-rich
 	ivy буферы в виде таблицы.
     #+BEGIN_SRC emacs-lisp
@@ -237,7 +244,9 @@
 	Для java дебагер поставляется lsp-java
 	#+BEGIN_SRC emacs-lisp
 	  (use-package dap-mode
-		  :commands dap-debug)
+		  :commands dap-debug
+		  :config (require 'dap-gdb-lldb)
+		  (dap-gdb-lldb-setup))
 	#+END_SRC
 **** C-C++
 	 #+BEGIN_SRC emacs-lisp
@@ -326,24 +335,23 @@
    Автодополнение
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
-		 :hook (prog-mode . company-mode)
-		 (org-mode . company-mode)
-		 :custom (company-ide-delay 0)
-		 (company-minimum-prefix-length 1)
-		 (company-selection-wrap-around t))
+	   :config (global-company-mode 1)
+	   :custom (company-ide-delay 0)
+	   (company-minimum-prefix-length 1)
+	   (company-selection-wrap-around t))
    #+END_SRC
-*** Company-lsp
-	#+BEGIN_SRC emacs-lisp
-	  (use-package company-lsp
-		  :after (lsp company)
-		  :config (push 'company-lsp company-backends))
-	#+END_SRC 
 *** Company-org
 	Для автодополнения "#+" функций в org файлах
 	#+BEGIN_SRC emacs-lisp
 	  (defun company-org-hook ()
 		  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
 	  (add-hook 'org-mode-hook #'company-org-hook)
+	#+END_SRC
+*** Company-box
+	#+BEGIN_SRC emacs-lisp
+	  (use-package company-box
+		:hook (company-mode . company-box-mode)
+		:custom (company-box-doc-delay 1.5))
 	#+END_SRC
 ** Which-key
    Подсказка биндов после нажатия C-x
