@@ -18,6 +18,11 @@
 											   "Октябрь" "Ноябрь" "Декабрь"]
 		   calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
    #+END_SRC 
+** Быстродействие
+   #+BEGIN_SRC emacs-lisp
+   (setq gc-cons-threshold 100000000)
+   (setq read-process-output-max (* 1024 1024))
+   #+END_SRC
 * UI
   В этой секции содержатся настройки графического режима
 ** Скобочки
@@ -53,6 +58,7 @@
    (tool-bar-mode -1)
    (scroll-bar-mode -1)
    (setq inhibit-startup-screen t)
+   (set-fringe-mode 10)
    #+END_SRC
 ** Отступы
    #+BEGIN_SRC emacs-lisp
@@ -67,6 +73,7 @@
 ** Нумерация строк
    Нумерация включена для всех программных модов
    #+BEGIN_SRC emacs-lisp
+   (column-number-mode)
    (add-hook 'prog-mode-hook #'display-line-numbers-mode)
    #+END_SRC
 * Packages
@@ -75,10 +82,8 @@
 ** Ivy
    Более удобное exo и другие плюшки
    #+BEGIN_SRC emacs-lisp
-	 (use-package ivy
-		 :config (ivy-mode t)
-		 :custom (ivy-use-virtual-buffers t)
-		 (enable-recursive-minibuffers t))
+     (use-package ivy
+       :config (ivy-mode t))
    #+END_SRC
 *** Swiper
 	Прокаченный поиск через ivy
@@ -110,8 +115,7 @@
 	 Подключение counsel к tramp
 	 #+BEGIN_SRC emacs-lisp
 	   (use-package counsel-tramp
-		   :after tramp
-		   :bind ("C-c s" . counsel-tramp))
+		   :after tramp)
 	 #+END_SRC
 **** counsel-projectile
 	 Подключение counsel к projectile
@@ -132,7 +136,8 @@
 		(use-package ivy-rich
 	  :after ivy
 	  :config (ivy-rich-mode 1)
-	  (ivy-rich-project-root-cache-mode t))
+	  ;;(ivy-rich-project-root-cache-mode t)
+      )
     #+END_SRC
 ** Bookmark
    Закладки по тексту (встроенный)
@@ -213,7 +218,8 @@
 		 :hook (c-mode . lsp)
 		 (c++-mode . lsp)
 		 (lsp-mode . lsp-enable-which-key-integration)
-		 :custom (lsp-keymap-prefix "C-c l"))
+		 :custom (lsp-keymap-prefix "C-c l")
+         (lsp-idle-delay 0.500))
    #+END_SRC
 *** lsp-ui
 	Графический интерфейс для lsp
@@ -334,19 +340,13 @@
 ** Company
    Автодополнение
    #+BEGIN_SRC emacs-lisp
-	 (use-package company
-	   :config (global-company-mode 1)
-	   :custom (company-ide-delay 0)
-	   (company-minimum-prefix-length 1)
-	   (company-selection-wrap-around t))
+     (use-package company
+       :defer t
+       :hook (prog-mode . company-mode)
+       :custom (company-ide-delay 0)
+       (company-minimum-prefix-length 1)
+       (company-selection-wrap-around t))
    #+END_SRC
-*** Company-org
-	Для автодополнения "#+" функций в org файлах
-	#+BEGIN_SRC emacs-lisp
-	  (defun company-org-hook ()
-		  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
-	  (add-hook 'org-mode-hook #'company-org-hook)
-	#+END_SRC
 *** Company-box
 	#+BEGIN_SRC emacs-lisp
 	  (use-package company-box
@@ -356,24 +356,27 @@
 ** Which-key
    Подсказка биндов после нажатия C-x
    #+BEGIN_SRC emacs-lisp
-	 (use-package which-key
-		 :config (which-key-mode)
-		 :custom (which-key-idle-delay 1))
+     (use-package which-key
+       :defer t
+       :config (which-key-mode)
+       :custom (which-key-idle-delay 1))
    #+END_SRC
 ** Projectile
    Навигация по проектам которые содержат системы контроля версий
    либо файл .projectile
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
-	     :config (projectile-mode +1)
-	     :bind-keymap ("C-c p" . projectile-command-map))
+       :defer t
+       :config (projectile-mode +1)
+       :bind-keymap ("C-c p" . projectile-command-map))
    #+END_SRC
 ** Tramp
    Использование данной конфигурации emacs 
    для доступа к удалённым серверам
    #+BEGIN_SRC emacs-lisp
-	 (use-package tramp
-		 :init (setq tramp-default-method "ssh"))
+     (use-package tramp
+       :defer t
+       :init (setq tramp-default-method "ssh"))
    #+END_SRC
 * Другие настройки
   Менее важные настройки
@@ -381,7 +384,7 @@
    #+BEGIN_SRC emacs-lisp
    (setq x-select-enable-clipboard t)
    #+END_SRC
-** Проверка ошибок
+** COMMENT Проверка ошибок
    #+BEGIN_SRC emacs-lisp
 	 (add-hook 'text-mode-hook #'flyspell-mode)
 	 (with-eval-after-load "ispell"
@@ -396,6 +399,3 @@
    #+BEGIN_SRC emacs-lisp
 	 (global-set-key (kbd "C-x O") 'window-swap-states)
    #+END_SRC
-
-
-
