@@ -18,11 +18,6 @@
 											   "Октябрь" "Ноябрь" "Декабрь"]
 		   calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
    #+END_SRC 
-** Быстродействие
-   #+BEGIN_SRC emacs-lisp
-   (setq gc-cons-threshold 100000000)
-   (setq read-process-output-max (* 1024 1024))
-   #+END_SRC
 * UI
   В этой секции содержатся настройки графического режима
 ** Скобочки
@@ -117,13 +112,6 @@
 	   (use-package counsel-tramp
 		   :after tramp)
 	 #+END_SRC
-**** counsel-projectile
-	 Подключение counsel к projectile
-	 #+BEGIN_SRC emacs-lisp
-	   (use-package counsel-projectile
-		   :after projectile
-		   :config (counsel-projectile-mode 1))
-	 #+END_SRC
 *** ivy-hydra
 	Удобно для выбора нескольких вариантов в lsp.
 	C-o - m(ark)
@@ -182,7 +170,7 @@
       (use-package treemacs-all-the-icons
 	:config (treemacs-load-theme "all-the-icons"))
     #+END_SRC
-*** All-the-icons-
+*** All-the-icons-dired
 	#+BEGIN_SRC emacs-lisp
 	  (use-package all-the-icons-dired
 		  :hook (dired-mode . all-the-icons-dired-mode))
@@ -213,13 +201,20 @@
 ** Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
-	 (use-package lsp-mode 
-		 :commands lsp
-		 :hook (c-mode . lsp)
-		 (c++-mode . lsp)
-		 (lsp-mode . lsp-enable-which-key-integration)
-		 :custom (lsp-keymap-prefix "C-c l")
-         (lsp-idle-delay 0.500))
+     (use-package lsp-mode
+         :defer t
+         :hook (c-mode . lsp)
+         (c++-mode . lsp)
+         (python-mode . lsp)
+         (java-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration)
+         :custom (lsp-keymap-prefix "C-c l")
+         (lsp-idle-delay 0.500)
+
+         (use-package lsp-python-ms
+           :custom (lsp-python-ms-auto-install-server))
+
+         (use-package lsp-java))
    #+END_SRC
 *** lsp-ui
 	Графический интерфейс для lsp
@@ -235,53 +230,32 @@
 	#+END_SRC
 *** lsp-treemacs
     #+BEGIN_SRC emacs-lisp
-      (use-package lsp-treemacs
-	:ensure nil
-	:after (lsp treemacs)
-	:config (lsp-treemacs-sync-mode 1))
+        (use-package lsp-treemacs
+          :ensure nil
+          :commands lsp-treemacs-errors-list
+          :config (lsp-treemacs-sync-mode 1))
     #+END_SRC
 *** lsp-ivy
 	#+BEGIN_SRC emacs-lisp
-	  (use-package lsp-ivy
-		  :after lsp)
+      (use-package lsp-ivy
+        :commands lsp-ivy-workspace-symbol)
 	#+END_SRC
 *** dap-mode
 	Дебагер 
 	Для java дебагер поставляется lsp-java
 	#+BEGIN_SRC emacs-lisp
-	  (use-package dap-mode
-		  :commands dap-debug
-		  :config (require 'dap-gdb-lldb)
-		  (dap-gdb-lldb-setup))
-	#+END_SRC
-**** C-C++
-	 #+BEGIN_SRC emacs-lisp
-	   (use-package dap-cpptools
-		   :ensure nil
-		   :config (dap-cpptools-setup))
-	 #+END_SRC
-**** Python
-	 Необходим ptvsd.
-	 pip install ptvsd
-	 #+BEGIN_SRC emacs-lisp
-	   (use-package dap-python
-		   :ensure nil
-		   :after dap-mode)
-	 #+END_SRC
-*** C-C++
-	Хуки в разделе lsp
-*** Python
-	#+BEGIN_SRC emacs-lisp
-	  (use-package lsp-python-ms
-		  :after lsp-mode
-		  :hook (python-mode . lsp)
-		  :custom (lsp-python-ms-auto-install-server))
-	#+END_SRC
-*** Java
-	#+BEGIN_SRC emacs-lisp
-	  (use-package lsp-java
-		  :after lsp-mode
-		  :hook (java-mode . lsp))
+      (use-package dap-mode
+        :after lsp-mode
+        :commands dap-debug
+        :hook (dap-terminated. dap-exit-all)
+        (lsp-mode . dap-exit-all)
+        :config (require 'dap-gdb-lldb)
+        (require 'dap-cpptools)
+        (require 'dap-python)
+        (defun dap-exit-all ()
+          (dap-delete-all-sessions)
+          (dap-mode nil))
+        '(dap-gdb-lldb-setup))
 	#+END_SRC
 ** Minions
    Спрятать минорные режимы
@@ -303,12 +277,6 @@
 	:bind ("C-c t"   . treemacs)
 	:config (treemacs-git-mode 'deferred))
    #+END_SRC
-*** Treemacs-projectile
-	Связь projectile и treemacs
-    #+BEGIN_SRC emacs-lisp
-      (use-package treemacs-projectile
-	:after (treemacs projectile))
-    #+END_SRC
 *** Treemacs-magit
 	Связь treemacs и magit
     #+BEGIN_SRC emacs-lisp
@@ -347,12 +315,6 @@
        (company-minimum-prefix-length 1)
        (company-selection-wrap-around t))
    #+END_SRC
-*** Company-box
-	#+BEGIN_SRC emacs-lisp
-	  (use-package company-box
-		:hook (company-mode . company-box-mode)
-		:custom (company-box-doc-delay 1.5))
-	#+END_SRC
 ** Which-key
    Подсказка биндов после нажатия C-x
    #+BEGIN_SRC emacs-lisp
