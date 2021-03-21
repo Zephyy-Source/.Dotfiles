@@ -112,6 +112,11 @@
 	   (use-package counsel-tramp
 		   :after tramp)
 	 #+END_SRC
+**** counsel-projecile
+     #+BEGIN_SRC emacs-lisp
+       (use-package counsel-projectile
+       :config (counsel-projectile-mode t))
+     #+END_SRC
 *** ivy-hydra
 	Удобно для выбора нескольких вариантов в lsp.
 	C-o - m(ark)

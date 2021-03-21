@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(projectile ivy-hydra org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy ## all-the-icons-dired all-the-icons lsp-java tramp lsp-python-ms lsp-ui lsp-mode company magit flycheck)))
+   '(counsel-projectile projectile ivy-hydra org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy ## all-the-icons-dired all-the-icons lsp-java tramp lsp-python-ms lsp-ui lsp-mode company magit flycheck)))
 
 ;;Расширение репозитория
 
