@@ -229,21 +229,23 @@
 
        :config (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 
-       (defconst jdtls-root "~/.emacs.d/jdtls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+       (defconst my-jdtls-file "org.eclipse.equinox.launcher_")
+       (defconst my-jdtls-dir (expand-file-name "~/.emacs.d/jdtls/plugins/"))
 
-       (defun my/eclipse-jdt-contact (interactive)
+       (defun my-eclipse-jdt-contact (interactive)
          (let ((cp (getenv "CLASSPATH")))
-           (setenv "CLASSPATH" (concat cp ":" (expand-file-name my/eclipse-jdt-home)))
+           (setenv "CLASSPATH" (concat cp ":" (concat my-jdtls-dir
+                                                      (file-name-completion my-jdtls-file my-jdtls-dir))))
            (unwind-protect
                (eglot--eclipse-jdt-contact nil)
              (setenv "CLASSPATH" cp))))
 
-       (setcdr (assq 'java-mode eglot-server-programs) #'my/eclipse-jdt-contact)
+       (setcdr (assq 'java-mode eglot-server-programs) #'my-eclipse-jdt-contact)
 
        :bind (:map eglot-mode-map ("C-c e r" . eglot-rename)
-       ("C-c e o" . eglot-code-action-organize-imports)
-       ("C-c e f" . eglot-format-buffer) ("C-c e s r" . eglot-reconnect)
-       ("C-c e s s" . eglot-shutdown)))
+                   ("C-c e o" . eglot-code-action-organize-imports)
+                   ("C-c e f" . eglot-format-buffer) ("C-c e s r" . eglot-reconnect)
+                   ("C-c e s s" . eglot-shutdown)))
    #+END_SRC
 
    Так же [[https://github.com/astoff/digestif][тут]] есть отличный сервер для латеха
