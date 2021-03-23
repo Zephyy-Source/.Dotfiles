@@ -112,17 +112,6 @@
 	   (use-package counsel-tramp
 		   :after tramp)
 	 #+END_SRC
-**** counsel-projecile
-     #+BEGIN_SRC emacs-lisp
-       (use-package counsel-projectile
-       :config (counsel-projectile-mode t))
-     #+END_SRC
-*** ivy-hydra
-	Удобно для выбора нескольких вариантов в lsp.
-	C-o - m(ark)
-	#+BEGIN_SRC emacs-lisp
-	  (use-package ivy-hydra)
-	#+END_SRC
 *** ivy-rich
 	ivy буферы в виде таблицы.
     #+BEGIN_SRC emacs-lisp
@@ -186,7 +175,8 @@
 	 (use-package yasnippet
 		 :config (yas-reload-all)
 		 :hook (prog-mode . yas-minor-mode)
-		 (org-mode . yas-minor-mode))
+		 (org-mode . yas-minor-mode)
+         (latex-mode . yas-minor-mode))
    #+END_SRC
 ** Dired
    Редактор директорий (встроенный)
@@ -203,7 +193,159 @@
 	   :custom (doom-modeline-minor-modes t)
 	   (doom-modeline-icon t))
    #+END_SRC
-** Lsp
+** Flymake
+   #+BEGIN_SRC emacs-lisp
+     (use-package flymake
+       :ensure nil
+       :hook (prog-mode . flymake-mode)
+       :custom (flymake-error-bitmap '(filled-rectangle compilation-error))
+       (flymake-note-bitmap '(filled-rectangle compilation-info))
+       (flymake-warning-bitmap '(filled-rectangle compilation-warning))
+       :bind (:map flymake-mode-map ("C-c m n" . flymake-goto-next-error)
+       ("C-c m p" . flymake-goto-prev-error)))
+   #+END_SRC
+** Project
+   Найти 
+   #+BEGIN_SRC emacs-lisp
+     (use-package project
+       :ensure nil
+       :config (defun local/project-try-explicit (dir)
+                 (locate-dominating-file dir ".root"))
+
+       (defmethod project-root ((project string))
+         project)
+
+       (add-hook 'project-find-functions
+                 #'local/project-try-explicit))
+   #+END_SRC
+** Eglot
+   #+BEGIN_SRC emacs-lisp
+     (use-package eglot
+       :hook (c-mode . eglot-ensure)
+       (c++-mode . eglot-ensure)
+       (python-mode . eglot-ensure)
+       (java-mode . eglot-ensure)
+       (latex-mode . eglot-ensure)
+
+       :config (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+
+       (defconst jdtls-root "~/.emacs.d/jdtls/plugins/org.eclipse.equinox.launcher_1.6.100.v20201223-0822.jar")
+
+       (defun my/eclipse-jdt-contact (interactive)
+         (let ((cp (getenv "CLASSPATH")))
+           (setenv "CLASSPATH" (concat cp ":" (expand-file-name my/eclipse-jdt-home)))
+           (unwind-protect
+               (eglot--eclipse-jdt-contact nil)
+             (setenv "CLASSPATH" cp))))
+
+       (setcdr (assq 'java-mode eglot-server-programs) #'my/eclipse-jdt-contact)
+
+       :bind (:map eglot-mode-map ("C-c e r" . eglot-rename)
+       ("C-c e o" . eglot-code-action-organize-imports)
+       ("C-c e f" . eglot-format-buffer) ("C-c e s r" . eglot-reconnect)
+       ("C-c e s s" . eglot-shutdown)))
+   #+END_SRC
+
+   Так же [[https://github.com/astoff/digestif][тут]] есть отличный сервер для латеха
+** Minions
+   Спрятать минорные режимы
+   #+BEGIN_SRC emacs-lisp
+	 (use-package minions
+	   :config (minions-mode t))
+   #+END_SRC
+** Treemacs
+   Дерево проектов
+   #+BEGIN_SRC emacs-lisp
+      (use-package treemacs
+	:defer t
+	:bind ("C-c t"   . treemacs)
+	:config (treemacs-git-mode 'deferred))
+   #+END_SRC
+*** Treemacs-magit
+	Связь treemacs и magit
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs-magit
+	:after (treemacs magit))
+    #+END_SRC
+** Comment-tags
+   Подсветка и навигация по TODO комментариям.
+   #+BEGIN_SRC emacs-lisp
+	 (use-package comment-tags
+	   :hook (prog-mode . comment-tags-mode)
+	   :custom (comment-tags-keymap-prefix (kbd "C-c #"))
+	   (comment-tags-keyword-faces
+			 `(("TODO" . ,(list :weight 'bold :foreground "#28ABE3"))
+			   ("FIXME" . ,(list :weight 'bold :foreground "#DB3340"))
+			   ("BUG" . ,(list :weight 'bold :foreground "#DB3340"))
+			   ("HACK" . ,(list :weight 'bold :foreground "#E8B71A"))
+			   ("KLUDGE" . ,(list :weight 'bold :foreground "#E8B71A"))
+			   ("XXX" . ,(list :weight 'bold :foreground "#F7EAC8"))
+			   ("INFO" . ,(list :weight 'bold :foreground "#F7EAC8"))
+			   ("DONE" . ,(list :weight 'bold :foreground "#1FDA9A")))))
+   #+END_SRC
+** Magit
+   Интерфейс для взаимодействия с git
+   #+BEGIN_SRC emacs-lisp
+	 (use-package magit
+		 :commands magit-status)
+   #+END_SRC
+** Company
+   Автодополнение
+   #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :defer t
+       :hook (prog-mode . company-mode)
+       (latex-mode . company-mode)
+       :custom (company-ide-delay 0)
+       (company-minimum-prefix-length 1)
+       (company-selection-wrap-around t))
+   #+END_SRC
+** Which-key
+   Подсказка биндов после нажатия C-x
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :config (which-key-mode)
+       :custom (which-key-idle-delay 1))
+   #+END_SRC
+** Tramp
+   Использование данной конфигурации emacs 
+   для доступа к удалённым серверам
+   #+BEGIN_SRC emacs-lisp
+     (use-package tramp
+       :ensure nil
+       :defer t
+       :init (setq tramp-default-method "ssh"))
+   #+END_SRC
+** LaTeX-prewiew-pane
+   Превью латех фрагментов. 
+   #+BEGIN_SRC emacs-lisp
+     (use-package latex-preview-pane
+     :hook (latex-mode . latex-preview-pane-mode))
+   #+END_SRC
+* Другие настройки
+  Менее важные настройки
+** Общий буфер обмена
+   #+BEGIN_SRC emacs-lisp
+   (setq x-select-enable-clipboard t)
+   #+END_SRC
+** Проверка ошибок
+   #+BEGIN_SRC emacs-lisp
+     (use-package ispell
+       :config (ispell-set-spellchecker-params)
+       (ispell-hunspell-add-multi-dic "en_US,ru_RU")
+  
+;;       (when (bound-and-true-p flyspell-mode) )
+  
+       :custom (ispell-program-name "hunspell")
+       (ispell-dictionary "en_US,ru_RU")
+       (ispell-personal-dictionary "~/.hunspell_personal"))
+   #+END_SRC
+** Кастомные бинды
+   #+BEGIN_SRC emacs-lisp
+	 (global-set-key (kbd "C-x O") 'window-swap-states)
+   #+END_SRC
+* COMMENT Закоментированное
+** COMMENT Lsp
    Реализация протокола языков для emacs
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
@@ -262,73 +404,7 @@
           (dap-mode nil))
         '(dap-gdb-lldb-setup))
 	#+END_SRC
-** Minions
-   Спрятать минорные режимы
-   #+BEGIN_SRC emacs-lisp
-	 (use-package minions
-	   :config (minions-mode t))
-   #+END_SRC
-** Flycheck
-   Проверка синтаксиса
-   #+BEGIN_SRC emacs-lisp
-	 (use-package flycheck
-		 :hook (prog-mode . flycheck-mode))
-   #+END_SRC
-** Treemacs
-   Дерево проектов
-   #+BEGIN_SRC emacs-lisp
-      (use-package treemacs
-	:defer t
-	:bind ("C-c t"   . treemacs)
-	:config (treemacs-git-mode 'deferred))
-   #+END_SRC
-*** Treemacs-magit
-	Связь treemacs и magit
-    #+BEGIN_SRC emacs-lisp
-      (use-package treemacs-magit
-	:after (treemacs magit))
-    #+END_SRC
-** Comment-tags
-   Подсветка и навигация по TODO комментариям.
-   #+BEGIN_SRC emacs-lisp
-	 (use-package comment-tags
-	   :hook (prog-mode . comment-tags-mode)
-	   :custom (comment-tags-keymap-prefix (kbd "C-c #"))
-	   (comment-tags-keyword-faces
-			 `(("TODO" . ,(list :weight 'bold :foreground "#28ABE3"))
-			   ("FIXME" . ,(list :weight 'bold :foreground "#DB3340"))
-			   ("BUG" . ,(list :weight 'bold :foreground "#DB3340"))
-			   ("HACK" . ,(list :weight 'bold :foreground "#E8B71A"))
-			   ("KLUDGE" . ,(list :weight 'bold :foreground "#E8B71A"))
-			   ("XXX" . ,(list :weight 'bold :foreground "#F7EAC8"))
-			   ("INFO" . ,(list :weight 'bold :foreground "#F7EAC8"))
-			   ("DONE" . ,(list :weight 'bold :foreground "#1FDA9A")))))
-   #+END_SRC
-** Magit
-   Интерфейс для взаимодействия с git
-   #+BEGIN_SRC emacs-lisp
-	 (use-package magit
-		 :commands magit-status)
-   #+END_SRC
-** Company
-   Автодополнение
-   #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :defer t
-       :hook (prog-mode . company-mode)
-       :custom (company-ide-delay 0)
-       (company-minimum-prefix-length 1)
-       (company-selection-wrap-around t))
-   #+END_SRC
-** Which-key
-   Подсказка биндов после нажатия C-x
-   #+BEGIN_SRC emacs-lisp
-     (use-package which-key
-       :defer t
-       :config (which-key-mode)
-       :custom (which-key-idle-delay 1))
-   #+END_SRC
-** Projectile
+** COMMENT Projectile
    Навигация по проектам которые содержат системы контроля версий
    либо файл .projectile
    #+BEGIN_SRC emacs-lisp
@@ -337,32 +413,9 @@
        :config (projectile-mode +1)
        :bind-keymap ("C-c p" . projectile-command-map))
    #+END_SRC
-** Tramp
-   Использование данной конфигурации emacs 
-   для доступа к удалённым серверам
+** COMMENT Flycheck
+   Проверка синтаксиса
    #+BEGIN_SRC emacs-lisp
-     (use-package tramp
-       :defer t
-       :init (setq tramp-default-method "ssh"))
-   #+END_SRC
-* Другие настройки
-  Менее важные настройки
-** Общий буфер обмена
-   #+BEGIN_SRC emacs-lisp
-   (setq x-select-enable-clipboard t)
-   #+END_SRC
-** COMMENT Проверка ошибок
-   #+BEGIN_SRC emacs-lisp
-	 (add-hook 'text-mode-hook #'flyspell-mode)
-	 (with-eval-after-load "ispell"
-		 (setq ispell-program-name "hunspell")
-		 (ispell-set-spellchecker-params)
-		 (ispell-hunspell-add-multi-dic "en_US,ru_RU")
-		 (setq ispell-dictionary "en_US,ru_RU")
-		 (setq ispell-personal-dictionary "~/.hunspell_personal")
-		 )
-   #+END_SRC
-** Кастомные бинды
-   #+BEGIN_SRC emacs-lisp
-	 (global-set-key (kbd "C-x O") 'window-swap-states)
+	 (use-package flycheck
+		 :hook (prog-mode . flycheck-mode))
    #+END_SRC

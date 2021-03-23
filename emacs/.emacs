@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(counsel-projectile projectile ivy-hydra org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity lsp-ivy ## all-the-icons-dired all-the-icons lsp-java tramp lsp-python-ms lsp-ui lsp-mode company magit flycheck)))
+   '(latex-preview-pane eglot org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
@@ -48,4 +48,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(flymake-error ((t (:underline (:color "#d02b61" :style wave)))))
+ '(flymake-note ((t (:underline (:color "#60aa00" :style wave))))))
