@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :defer t
+  :commands lsp
   :hook (c-mode . lsp)
   (c++-mode . lsp)
   (python-mode . lsp)
@@ -14,14 +14,13 @@
   (lsp-mode . lsp-enable-which-key-integration)
   :custom (lsp-keymap-prefix "C-c l")
   (lsp-idle-delay 0.500)
+;;  :init  (setq lsp-auto-guess-root t)
   :config
   ;; Servers
   (use-package lsp-python-ms
     :custom (lsp-python-ms-auto-install-server))
 
   (use-package lsp-java)
-
-  (use-package lsp-jedi)
 
   ;; Other
   (use-package lsp-ui

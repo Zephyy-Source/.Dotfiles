@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(lsp-jedi ivy-hydra lsp-ivy lsp-ui lsp-java lsp-python-ms flycheck projectile lsp-mode latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(try auctex ivy-hydra lsp-ivy lsp-ui lsp-java lsp-python-ms flycheck projectile lsp-mode latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
@@ -66,3 +66,11 @@
 (provide 'init)
 
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)

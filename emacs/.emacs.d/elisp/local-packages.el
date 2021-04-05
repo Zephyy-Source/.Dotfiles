@@ -10,6 +10,8 @@
 
 (use-package swiper
   :after ivy
+  :init (unbind-key "C-s")
+  (unbind-key "C-c C-r")
   :bind ("C-s" . swiper)
   ("C-c C-r" . ivy-resume))
 
@@ -34,8 +36,7 @@
 (use-package ivy-rich
   :after ivy
   :config (ivy-rich-mode 1)
-  ;;(ivy-rich-project-root-cache-mode t)
-  )
+  (ivy-rich-project-root-cache-mode t))
 
 (use-package ivy-hydra)
 
@@ -51,6 +52,7 @@
   :bind ("C-c a" . org-agenda)
   ("C-c c" . org-capture)
   :custom (org-src-fontify-natively t)
+  (org-startup-folded t)
   (org-agenda-files (directory-files-recursively "~/.todo/" "org$"))
   (org-default-notes-file "~/.todo/notes.org")
 
@@ -62,6 +64,7 @@
 			     ("begin" "$1" "$" "$$" "\\(" "\\["))))
 
 (use-package org-superstar
+  :defer t
   :hook (org-mode . org-superstar-mode))
 
 (use-package all-the-icons)
@@ -73,6 +76,7 @@
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package ispell
+  :ensure nil
   :config (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,ru_RU")
   
@@ -81,6 +85,7 @@
   (ispell-personal-dictionary "~/.hunspell_personal"))
 
 (use-package yasnippet
+  :defer t
   :config (yas-reload-all)
   :hook (prog-mode . yas-minor-mode)
   (org-mode . yas-minor-mode)
@@ -103,9 +108,6 @@
   :bind ("C-c t"   . treemacs)
   :config (treemacs-git-mode 'deferred))
 
-(use-package treemacs-magit
-  :after (treemacs magit))
-
 (use-package comment-tags
   :hook (prog-mode . comment-tags-mode)
   :custom (comment-tags-keymap-prefix (kbd "C-c #"))
@@ -120,12 +122,15 @@
 	 ("DONE" . ,(list :weight 'bold :foreground "#1FDA9A")))))
 
 (use-package magit
+  :defer t
   :commands magit-status)
+
+(use-package try
+  :commands try)
 
 (use-package company
   :defer t
-  :hook (prog-mode . company-mode)
-  (latex-mode . company-mode)
+  :init (global-company-mode)
   :custom (company-ide-delay 0)
   (company-minimum-prefix-length 1)
   (company-selection-wrap-around t))
@@ -139,8 +144,13 @@
   :defer t
   :init (setq tramp-default-method "ssh"))
 
+(use-package auctex
+  :defer t
+  :custom (TeX-parse-self t)
+(TeX-auto-save t)
+(TeX-save-query nil))
+
 (use-package latex-preview-pane)
-       
 
 (provide 'local-packages)
 

@@ -10,7 +10,6 @@
   (c++-mode . eglot-ensure)
   (python-mode . eglot-ensure)
   (java-mode . eglot-ensure)
-  (latex-mode . eglot-ensure)
 
   :config (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 
