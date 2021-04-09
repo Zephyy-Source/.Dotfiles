@@ -29,7 +29,7 @@
   :bind (:map eglot-mode-map ("C-c e r" . eglot-rename)
               ("C-c e o" . eglot-code-action-organize-imports)
               ("C-c e f" . eglot-format-buffer) ("C-c e s r" . eglot-reconnect)
-              ("C-c e s s" . eglot-shutdown)))
+              ("C-c e s s" . eglot-shutdown) ("C-c e a" . eglot-code-actions)))
 
 (use-package project
   :ensure nil
@@ -48,8 +48,7 @@
   :custom (flymake-error-bitmap '(filled-rectangle compilation-error))
   (flymake-note-bitmap '(filled-rectangle compilation-info))
   (flymake-warning-bitmap '(filled-rectangle compilation-warning))
-  :bind (:map flymake-mode-map ("C-c m n" . flymake-goto-next-error)
-  ("C-c m p" . flymake-goto-prev-error)))
+  :bind (:map flymake-mode-map ("M-n" . flymake-goto-next-error) ("M-p" . flymake-goto-prev-error)))
 
 (provide 'local-eglot)
 

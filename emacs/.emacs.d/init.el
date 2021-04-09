@@ -14,8 +14,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
+ '(ede-project-directories '("/home/zephyy/study/course2/sem2/Java/lab4.2"))
  '(package-selected-packages
-   '(try auctex ivy-hydra lsp-ivy lsp-ui lsp-java lsp-python-ms flycheck projectile lsp-mode latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(dashboard markdown-mode eglot try auctex ivy-hydra flycheck latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
@@ -41,28 +42,16 @@
 ;; Общий буфер обмена с системой.
 (setq x-select-enable-clipboard t)
 
-;; Русификация календаря
-(setq calendar-week-start-day 1
-	  calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда"
-							   "Четверг" "Пятница" "Суббота"]
-	  calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"]
-	  calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"]
-	  calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май"
-								 "Июнь" "Июль" "Август" "Сентябрь"
-								 "Октябрь" "Ноябрь" "Декабрь"]
-	  calendar-month-abbrev-array ["Янв" "Фев" "Мар" "Апр" "Май" "Июн" "Июл" "Авг" "Сен" "Окт" "Ноя" "Дек"])
-
-;; Загрузка файла в орг моде
-;;(org-babel-load-file (file-truename "~/.emacs.d/set.org"))
-
 (add-to-list 'load-path (file-truename "~/.emacs.d/elisp"))
-(require 'local-ui)
-(require 'local-packages)
-(require 'local-lsp)
+(use-package local-ui
+  :ensure nil)
+(use-package local-packages
+  :ensure nil)
+(use-package local-eglot
+  :ensure nil)
 
 ;;; Горячие клавиши
 ;; Менять окна местами
-(global-set-key (kbd "C-x O") 'window-swap-states)
 (provide 'init)
 
 ;;; init.el ends here
@@ -72,5 +61,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
