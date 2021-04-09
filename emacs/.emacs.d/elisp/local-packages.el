@@ -82,10 +82,10 @@
 
 (use-package dashboard
   :config (dashboard-setup-startup-hook)
+  (when (daemonp) (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
   (setq dashboard-items '((projects . 5)
                           (bookmarks . 5)
                           (recents  . 5)))
-
   (setq dashboard-set-navigator t)
   (if (display-graphic-p)
       (setq dashboard-navigator-buttons
@@ -95,11 +95,8 @@
     (setq dashboard-navigator-buttons
           '((("*" "Scratch" "Jump into scratch buffer"
               (lambda (&rest _) (switch-to-buffer "*scratch*")))))))
-
-
   :custom (dashboard-startup-banner 3)
-  (dashboard-projects-backend 'project-el)
-  (initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
+  (dashboard-projects-backend 'project-el))
 
 ;; Набор иконок для различных буферов
 (use-package all-the-icons)
