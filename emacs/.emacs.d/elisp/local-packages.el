@@ -1,4 +1,4 @@
-;;; local-packages.el --- 27
+;;; local-packages.el --- Summary;
 
 ;;; Commentary:
 ;; Пакеты, которые являются основой сборки.
@@ -6,8 +6,7 @@
 ;;; Code:
 
 (use-package helm
-  :defer 2
-  :config (helm-mode t)
+  :init (helm-mode t)
   :bind ("M-x" . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("<f12>" . helm-bookmarks)
@@ -23,16 +22,17 @@
   :bind ("C-h b" . helm-descbinds))
 
 (use-package helm-tramp
-  :after helm)
-
+  :defer 2)
 
 ;; Управление окнами
 (use-package ace-window
+  :defer 1
   :init (global-unset-key (kbd "M-o"))
   :bind ("M-o" . ace-window))
 
 ;; Настройки для встроенных закладок
 (use-package bookmark
+  :defer 1
   :ensure nil
   :init (when (file-exists-p (concat user-emacs-directory "bookmarks"))
 		  (bookmark-load bookmark-default-file t))
@@ -41,6 +41,7 @@
 
 ;; Кастомизация org-mode
 (use-package org
+  :defer 2
   :ensure nil
   :bind ("C-c a" . org-agenda)
   ("C-c c" . org-capture)
@@ -58,7 +59,7 @@
 
 ;; Альтернативные символы для org-mode
 (use-package org-superstar
-  :defer t
+  :defer 2
   :hook (org-mode . org-superstar-mode))
 
 (use-package dashboard
@@ -92,6 +93,7 @@
 
 ;; Настройки для проверки грамматических ошибок
 (use-package ispell
+  :defer 3
   :ensure nil
   :config (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,ru_RU")
@@ -101,7 +103,7 @@
 
 ;; Сниппеты
 (use-package yasnippet
-  :defer t
+  :defer 4
   :config (yas-reload-all)
   :hook (prog-mode . yas-minor-mode)
   (org-mode . yas-minor-mode)
