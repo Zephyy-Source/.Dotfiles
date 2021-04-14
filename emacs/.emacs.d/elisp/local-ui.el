@@ -15,9 +15,10 @@
 
 ;; Тема и шрифт
 (use-package doom-themes
-  :init (load-theme 'doom-Iosvkem t)
+  :init (load-theme 'doom-snazzy t)
   :config 
-  (setq doom-themes-treemacs-theme "doom-colors")
+  (setq doom-themes-treemacs-theme "doom-gruvbox")
+  (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 

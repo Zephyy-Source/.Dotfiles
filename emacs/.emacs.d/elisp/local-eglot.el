@@ -27,9 +27,9 @@
   (setcdr (assq 'java-mode eglot-server-programs) #'my-eclipse-jdt-contact)
 
   :bind (:map eglot-mode-map ("C-c e r" . eglot-rename)
-              ("C-c e o" . eglot-code-action-organize-imports)
               ("C-c e f" . eglot-format-buffer) ("C-c e s r" . eglot-reconnect)
-              ("C-c e s s" . eglot-shutdown) ("C-c e a" . eglot-code-actions)))
+              ("C-c e s s" . eglot-shutdown) ("C-c e a" . eglot-code-actions)
+              ("C-c e o" . ff-find-other-file)))
 
 (use-package project
   :ensure nil

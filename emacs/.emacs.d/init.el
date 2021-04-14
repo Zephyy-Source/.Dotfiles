@@ -16,7 +16,7 @@
  '(auth-source-save-behavior nil)
  '(ede-project-directories '("/home/zephyy/study/course2/sem2/Java/lab4.2"))
  '(package-selected-packages
-   '(dashboard markdown-mode eglot try auctex ivy-hydra flycheck latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions ivy-rich treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp counsel-tramp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode eglot try auctex flycheck latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 

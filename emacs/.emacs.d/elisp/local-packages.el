@@ -5,52 +5,33 @@
 
 ;;; Code:
 
-;; Автодополнение для комманд
-(use-package ivy
-  :config (ivy-mode t))
+(use-package helm
+  :defer 2
+  :config (helm-mode t)
+  :bind ("M-x" . helm-M-x)
+  ("C-x C-f" . helm-find-files)
+  ("<f12>" . helm-bookmarks)
+  ("C-x b" . helm-buffers-list)
+  ("C-x C-b" . helm-mini))
 
-;; Улучшенная версия isearch
-(use-package swiper
-  :after ivy
-  :init (unbind-key "C-s")
-  (unbind-key "C-c C-r")
-  :bind ("C-s" . swiper)
-  ("C-c C-r" . ivy-resume))
+(use-package helm-swoop
+  :after helm
+  :bind ("C-s" . helm-swoop))
 
-;; Улучшенные стандартные комманды
-(use-package counsel
-  :after ivy
-  :bind ("M-x" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("<f1> f" . counsel-describe-function)
-  ("<f1> v" . counsel-describe-variable)
-  ("<f1> o" . counsel-describe-symbol)
-  ("<f1> l" . counsel-find-library)
-  ("<f1> b" . counsel-descbinds)
-  ("<f2>" . counsel-org-capture)
-  ("<f5>" . counsel-imenu)
-  ("<f12>" . counsel-bookmark)
-  (:map minibuffer-local-map ("C-r" . counsel-minibuffer-history)))
+(use-package helm-descbinds
+  :after helm
+  :bind ("C-h b" . helm-descbinds))
 
-;; Улучшенние для tramp
-(use-package counsel-tramp
-  :after tramp)
+(use-package helm-tramp
+  :after helm)
 
-;; Больше информации в ivy
-(use-package ivy-rich
-  :after ivy
-  :config (ivy-rich-mode 1)
-  (ivy-rich-project-root-cache-mode t))
-
-;; Дополнительные возможности для ivy по нажатии C-o
-(use-package ivy-hydra)
 
 ;; Управление окнами
 (use-package ace-window
   :init (global-unset-key (kbd "M-o"))
   :bind ("M-o" . ace-window))
 
-;; Настройки для встроенных закладок 
+;; Настройки для встроенных закладок
 (use-package bookmark
   :ensure nil
   :init (when (file-exists-p (concat user-emacs-directory "bookmarks"))
@@ -197,7 +178,7 @@
   (TeX-auto-save t)
   (TeX-save-query nil))
 
-;; Предпросмотр LaTeX документов 
+;; Предпросмотр LaTeX документов
 (use-package latex-preview-pane)
 
 (provide 'local-packages)
