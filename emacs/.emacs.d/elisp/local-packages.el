@@ -77,8 +77,8 @@
     (setq dashboard-navigator-buttons
           '((("*" "Scratch" "Jump into scratch buffer"
               (lambda (&rest _) (switch-to-buffer "*scratch*")))))))
-  :custom (dashboard-startup-banner 3)
-  (dashboard-projects-backend 'project-el))
+  :custom (dashboard-startup-banner 3))
+
 
 ;; Набор иконок для различных буферов
 (use-package all-the-icons)
@@ -153,6 +153,9 @@
 ;; Проба пакета без его скачивания
 (use-package try
   :commands try)
+
+(use-package restart-emacs
+  :commands restart-emacs)
 
 ;; Автодополнение во время ввода
 (use-package company

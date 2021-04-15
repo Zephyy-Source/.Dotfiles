@@ -17,9 +17,6 @@
 ;;  :init  (setq lsp-auto-guess-root t)
   :config
   ;; Servers
-  (use-package lsp-python-ms
-    :custom (lsp-python-ms-auto-install-server))
-
   (use-package lsp-java)
 
   ;; Other
@@ -31,15 +28,15 @@
                                  ([remap xref-find-references] . lsp-ui-peek-find-references)))
     :custom (lsp-ui-doc-delay 3)
     (lsp-ui-doc-position 'at-point))
+
+(use-package helm-lsp
+  :bind (:map lsp-mode-map ([remap xref-find-apropos] . helm-lsp-workspace-symbol)))
+  
   (use-package lsp-treemacs
     :ensure nil
     :after lsp-mode
     :commands lsp-treemacs-errors-list
-    :config (lsp-treemacs-sync-mode 1))
-
-  (use-package lsp-ivy
-    :after lsp-mode
-    :commands lsp-ivy-workspace-symbol))
+    :config (lsp-treemacs-sync-mode 1)))
 
 (use-package dap-mode
   :after lsp-mode
@@ -54,8 +51,14 @@
   :config (projectile-mode +1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
+(use-package helm-projectile
+  :after projectile)
+
 (use-package flycheck
-  :hook (prog-mode . flycheck-mode))
+  :hook (prog-mode . flycheck-mode)
+  :bind (:map flycheck-mode-map
+              ("M-p" . flycheck-previous-error)
+              ("M-n" . flycheck-next-error)))
 
 (provide 'local-lsp)
 
