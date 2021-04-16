@@ -15,9 +15,8 @@
 
 ;; Тема и шрифт
 (use-package doom-themes
-  :init (load-theme 'doom-snazzy t)
-  :config 
-  (doom-themes-visual-bell-config)
+  :init (load-theme 'doom-sourcerer t)
+  :config (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
@@ -28,7 +27,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (setq inhibit-startup-screen t)
-(set-fringe-mode 10)
+(set-fringe-mode 5)
 
 ;; Отступы
 (setq-default indent-tabs-mode nil)

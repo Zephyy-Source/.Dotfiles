@@ -77,7 +77,10 @@
     (setq dashboard-navigator-buttons
           '((("*" "Scratch" "Jump into scratch buffer"
               (lambda (&rest _) (switch-to-buffer "*scratch*")))))))
+  (unless (package-installed-p 'projectile) (setq dashboard-projects-backend 'project-el))
   :custom (dashboard-startup-banner 3))
+  
+
 
 
 ;; Набор иконок для различных буферов
