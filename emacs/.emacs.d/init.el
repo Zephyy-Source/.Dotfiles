@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(helm-projectile lsp-ivy helm-lsp lsp-helm projectile lsp-ui lsp-java lsp-python-ms lsp-mode restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex flycheck latex-preview-pane org-bullets org-superstar doom-themes doom-modeline comment-tags minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -48,7 +48,7 @@
   :ensure nil)
 (use-package local-packages
   :ensure nil)
-(use-package local-lsp
+(use-package local-eglot
   :ensure nil)
 
 (setq gc-cons-threshold (* 50 1000 1000))
