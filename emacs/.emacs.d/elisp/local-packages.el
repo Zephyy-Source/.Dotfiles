@@ -46,11 +46,13 @@
   :ensure nil
   :bind ("C-c a" . org-agenda)
   ("C-c c" . org-capture)
+  :config (unless (file-directory-p "~/.emacs.d/todo") (make-directory "~/.emacs.d/todo"))
+  (setq org-agenda-files (directory-files-recursively "~/.emacs.d/todo/" "org$"))
+  (unless (file-exists-p "~/.emacs.d/notes.org") (make-empty-file "~/.emacs.d/notes.org"))
+  (setq org-default-notes-file "~/.emacs.d/notes.org")
+
   :custom (org-src-fontify-natively t)
   (org-startup-folded t)
-  (org-agenda-files (directory-files-recursively "~/.emacs.d/todo/" "org$"))
-  (org-default-notes-file "~/.emacs.d/notes.org")
-  
   (org-log-done t)
   (org-format-latex-options
    '(:foreground default :background default :scale 1.4

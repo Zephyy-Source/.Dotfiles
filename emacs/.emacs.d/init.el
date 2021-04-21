@@ -17,7 +17,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
@@ -57,3 +57,9 @@
 (provide 'init)
 
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
