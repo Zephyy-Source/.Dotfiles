@@ -28,6 +28,7 @@
 (use-package ace-window
   :defer 1
   :init (global-unset-key (kbd "M-o"))
+  :config (ace-window-display-mode)
   :bind ("M-o" . ace-window))
 
 ;; Настройки для встроенных закладок
@@ -47,9 +48,9 @@
   ("C-c c" . org-capture)
   :custom (org-src-fontify-natively t)
   (org-startup-folded t)
-  (org-agenda-files (directory-files-recursively "~/.todo/" "org$"))
-  (org-default-notes-file "~/.todo/notes.org")
-
+  (org-agenda-files (directory-files-recursively "~/.emacs.d/todo/" "org$"))
+  (org-default-notes-file "~/.emacs.d/notes.org")
+  
   (org-log-done t)
   (org-format-latex-options
    '(:foreground default :background default :scale 1.4
@@ -67,7 +68,8 @@
   (when (daemonp) (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))
   (setq dashboard-items '((projects . 5)
                           (bookmarks . 5)
-                          (recents  . 5)))
+                          (recents . 5)))
+  
   (setq dashboard-set-navigator t)
   (if (display-graphic-p)
       (setq dashboard-navigator-buttons
@@ -178,6 +180,9 @@
   :ensure nil
   :defer t
   :init (setq tramp-default-method "ssh"))
+
+;; Terminal emulator
+(use-package vterm)
 
 ;; LaTeX улучшения
 (use-package auctex

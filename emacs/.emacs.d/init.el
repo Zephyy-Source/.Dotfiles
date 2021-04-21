@@ -8,6 +8,8 @@
 
 ;;; Code:
 
+(setq gc-cons-threshold (* 50 1000 1000))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -15,9 +17,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
-
-(setq gc-cons-threshold (* 50 1000 1000))
+   '(vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp sublimity ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
@@ -51,17 +51,9 @@
 (use-package local-eglot
   :ensure nil)
 
-(setq gc-cons-threshold (* 50 1000 1000))
-
 (setq gc-cons-threshold (* 2 1000 1000))
 ;;; Горячие клавиши
 ;; Менять окна местами
 (provide 'init)
 
 ;;; init.el ends here
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

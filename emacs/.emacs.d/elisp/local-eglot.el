@@ -36,7 +36,7 @@
   :config (defun local/project-try-explicit (dir)
             (locate-dominating-file dir ".root"))
 
-  (defmethod project-root ((project string))
+  (cl-defmethod project-root ((project string))
     project)
 
   (add-hook 'project-find-functions
