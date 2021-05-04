@@ -5,13 +5,32 @@
 
 ;;; Code:
 
-;; Скобочки
-(show-paren-mode 2)
-(electric-pair-mode 1)
+(defun local-graphic-init()
+  "Задержка на включение различных графических штук."
+  ;; Отключение лишнего, увеличение отсупа по бокам.
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (setq-default inhibit-startup-screen t)
+  (set-fringe-mode 5)
+  ;; Отступы
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (electric-indent-mode 1)
+  (setq-default backward-delete-char-untabify-method 'hungry)
+  ;; Нумерация строк
+  (column-number-mode t)
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  ;; Скобочки
+  (show-paren-mode 2)
+  (electric-pair-mode 1)
+  ;; Рамка
+  (setq frame-title-format "GNU Emacs: %b"))
 
 
-;; Рамка
-(setq frame-title-format "GNU Emacs: %b")
+(add-hook 'after-init-hook 'local-graphic-init)
+
+
 
 ;; Тема и шрифт
 (use-package doom-themes
@@ -20,24 +39,16 @@
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
-(setq default-frame-alist '((font . "JetBrains Mono-10")))
+(defun local-font-exists (font)
+  "Check if FONT exists."
+  (if (null (x-list-fonts font)) nil t))
 
-;; Отключение лишнего, увеличение отсупа по бокам.
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-startup-screen t)
-(set-fringe-mode 5)
+(cond
+ ((local-font-exists "Jetbrains Mono")
+  (setq default-frame-alist '((font . "JetBrains Mono-10"))))
+ ((local-font-exists "SourceCode Pro")
+  (setq default-frame-alist '((font . "SourceCode Pro-10")))))
 
-;; Отступы
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(electric-indent-mode 1)
-(setq-default backward-delete-char-untabify-method 'hungry)
-
-;; Нумерация строк
-(column-number-mode t)
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; Отключенные настройки
 (put 'upcase-region 'disabled nil)

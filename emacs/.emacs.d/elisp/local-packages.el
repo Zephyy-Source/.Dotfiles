@@ -11,7 +11,8 @@
   ("C-x C-f" . helm-find-files)
   ("<f12>" . helm-bookmarks)
   ("C-x b" . helm-buffers-list)
-  ("C-x C-b" . helm-mini))
+  ("C-x C-b" . helm-mini)
+  ("C-h a" . helm-apropos))
 
 (use-package helm-swoop
   :after helm
@@ -71,7 +72,6 @@
   (setq dashboard-items '((projects . 5)
                           (bookmarks . 5)
                           (recents . 5)))
-  
   (setq dashboard-set-navigator t)
   (if (display-graphic-p)
       (setq dashboard-navigator-buttons
@@ -84,14 +84,12 @@
   (unless (package-installed-p 'projectile) (setq dashboard-projects-backend 'project-el))
   :custom (dashboard-startup-banner 3))
   
-
-
-
 ;; Набор иконок для различных буферов
 (use-package all-the-icons)
 
 ;; Иконки для treemacs
 (use-package treemacs-all-the-icons
+  :after (all-the-icons treemacs)
   :config (treemacs-load-theme "all-the-icons"))
 
 ;; Иконки для dired
@@ -184,7 +182,17 @@
   :init (setq tramp-default-method "ssh"))
 
 ;; Terminal emulator
-(use-package vterm)
+(use-package vterm
+  :commands vterm)
+
+;; Text type spped
+(use-package speed-type
+  :commands speed-type)
+
+;; Emacs init time profiler
+(use-package esup
+  :commands esup
+  :config (setq esup-user-init-file (file-truename "~/.emacs.d/init.el")))
 
 ;; LaTeX улучшения
 (use-package auctex
@@ -194,7 +202,8 @@
   (TeX-save-query nil))
 
 ;; Предпросмотр LaTeX документов
-(use-package latex-preview-pane)
+(use-package latex-preview-pane
+  :commands latex-preview-pane-mode)
 
 (provide 'local-packages)
 

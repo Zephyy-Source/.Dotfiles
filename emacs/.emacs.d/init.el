@@ -7,28 +7,34 @@
 ;; остальные настройки хранятся в .emacs.d/set.org
 
 ;;; Code:
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
 
-(setq gc-cons-threshold (* 50 1000 1000))
+(add-hook 'emacs-startup-hook
+  (lambda ()
+    (setq gc-cons-threshold 16777216
+          gc-cons-percentage 0.1)))
+
+(package-initialize) ;; Need for esup
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key yasnippet dap-pyhon dap-cpptools lsp ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(esup yasnippet speed-type vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key dap-pyhon dap-cpptools lsp ## all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
 
 ;; Автоскачивание пакетов
 (unless (package-installed-p 'use-package)
 							 (package-refresh-contents)
 							 (package-install 'use-package))
+
 (require 'use-package)
 (setq use-package-always-ensure t)
 
@@ -51,7 +57,6 @@
 (use-package local-eglot
   :ensure nil)
 
-(setq gc-cons-threshold (* 2 1000 1000))
 ;;; Горячие клавиши
 ;; Менять окна местами
 (provide 'init)
