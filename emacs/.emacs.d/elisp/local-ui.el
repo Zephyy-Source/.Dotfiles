@@ -30,8 +30,6 @@
 
 (add-hook 'after-init-hook 'local-graphic-init)
 
-
-
 ;; Тема и шрифт
 (use-package doom-themes
   :init (load-theme 'doom-sourcerer t)
@@ -41,14 +39,23 @@
 
 (defun local-font-exists (font)
   "Check if FONT exists."
-  (if (null (x-list-fonts font)) nil t))
+  (unless (eq font 'nil)
+    (if (null (x-list-fonts font)) nil t)))
 
-(cond
- ((local-font-exists "Jetbrains Mono")
-  (setq default-frame-alist '((font . "JetBrains Mono-10"))))
- ((local-font-exists "SourceCode Pro")
-  (setq default-frame-alist '((font . "SourceCode Pro-10")))))
 
+(defun local-set-font ()
+  "Set the FONT if it is installed."
+  (let ((font-list '("JetBrains Mono" "SourceCode Pro")))
+  (while font-list
+    (let ((ffont (pop font-list)))
+      (when (local-font-exists ffont)
+        (progn (set-face-attribute
+                'default nil :font ffont :height 100)
+               (setq font-list 'nil)))))))
+
+(if (daemonp) (add-hook 'after-make-frame-functions
+                        (lambda (frame) (with-selected-frame frame (local-set-font))))
+  (when (display-graphic-p) (local-set-font)))
 
 ;; Отключенные настройки
 (put 'upcase-region 'disabled nil)
