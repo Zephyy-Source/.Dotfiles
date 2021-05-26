@@ -42,6 +42,7 @@
   (unless (eq font 'nil)
     (if (null (x-list-fonts font)) nil t)))
 
+    
 
 (defun local-set-font ()
   "Set the FONT if it is installed."
@@ -51,7 +52,7 @@
       (when (local-font-exists ffont)
         (progn (set-face-attribute
                 'default nil :font ffont :height 100)
-               (setq font-list 'nil)))))))
+               (setq font-list nil)))))))
 
 (if (daemonp) (add-hook 'after-make-frame-functions
                         (lambda (frame) (with-selected-frame frame (local-set-font))))

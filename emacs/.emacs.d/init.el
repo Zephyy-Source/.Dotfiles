@@ -23,7 +23,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(esup yasnippet speed-type vterm comment-tags eglot lsp-helm restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-bullets org-superstar doom-themes doom-modeline minions treemacs-magit treemacs-all-the-icons use-package which-key dap-pyhon dap-cpptools lsp ## all-the-icons-dired all-the-icons tramp company magit)))
+   '(treemacs-all-the-icons esup yasnippet speed-type vterm comment-tags eglot restart-emacs helm-descbinds helm-swoop helm-tramp helm markdown dashboard markdown-mode try auctex latex-preview-pane org-superstar doom-themes doom-modeline minions treemacs-magit use-package which-key all-the-icons-dired all-the-icons tramp company magit)))
 
 ;;Расширение репозитория
 

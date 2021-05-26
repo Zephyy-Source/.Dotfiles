@@ -90,7 +90,20 @@
 ;; Иконки для treemacs
 (use-package treemacs-all-the-icons
   :after (all-the-icons treemacs)
-  :config (treemacs-load-theme "all-the-icons"))
+  :config (treemacs-load-theme "all-the-icons")
+  (dolist (face '(treemacs-root-face
+                  treemacs-git-unmodified-face
+                  treemacs-git-modified-face
+                  treemacs-git-renamed-face
+                  treemacs-git-ignored-face
+                  treemacs-git-untracked-face
+                  treemacs-git-added-face
+                  treemacs-git-conflict-face
+                  treemacs-directory-face
+                  treemacs-directory-collapsed-face
+                  treemacs-file-face
+                  treemacs-tags-face))
+    (set-face-attribute face nil :family "JetBrains Mono" :height 100)))
 
 ;; Иконки для dired
 (use-package all-the-icons-dired
@@ -165,7 +178,7 @@
 ;; Автодополнение во время ввода
 (use-package company
   :defer t
-  :init (global-company-mode)
+  :hook (prog-mode . company-mode)
   :custom (company-ide-delay 0)
   (company-minimum-prefix-length 1)
   (company-selection-wrap-around t))
