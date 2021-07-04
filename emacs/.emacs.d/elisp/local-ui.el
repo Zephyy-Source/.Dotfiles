@@ -61,6 +61,7 @@
 ;; Отключенные настройки
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 
 ;; Русификация календаря
 (setq calendar-week-start-day 1
